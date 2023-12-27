@@ -16,6 +16,7 @@
     "outDir": "./dist",
     "resolveJsonModule": true,
     "skipLibCheck": false,
+    "strict": false,
     "sourceMap": true,
     "target": "ESNext"
   },
