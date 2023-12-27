@@ -1,4 +1,4 @@
-<script type="ts">
+<script type="ts" lang="ts">
   import type { PresentUser } from '@annotorious/core';
 
   export let x: number;
