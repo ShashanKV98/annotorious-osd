@@ -34,7 +34,7 @@
     "./annotorious-openseadragon.css": "./dist/annotorious-openseadragon.css"
   },
   "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "^3.0.1",
+    "@sveltejs/vite-plugin-svelte": "^2.0.4",
     "@tsconfig/svelte": "^3.0.0",
     "@types/openseadragon": "^3.0.10",
     "@types/node":"^20.10.5",
