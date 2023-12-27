@@ -43,8 +43,8 @@
     "svelte": "^3.59.2",
     "svelte-preprocess": "^4.10.7",
     "typescript": "^4.9.5",
-    "vite": "^5.0.10",
-    "vite-plugin-dts": "^3.6.4"
+    "vite": "^4.2.1",
+    "vite-plugin-dts": "^3.6.0"
   },
   "peerDependencies": {
     "@annotorious/annotorious": "github:ShashanKV98/annotorious-subdir#dev",
