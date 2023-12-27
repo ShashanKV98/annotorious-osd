@@ -15,7 +15,6 @@
   },
   "scripts": {
     "start": "vite",
-    "prepare": "npm run build",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "test": "echo 'Skipping tests in @annotorious/openseadragon package'"
@@ -45,6 +44,8 @@
     "typescript": "^5.3.3",
     "vite": "^5.0.10",
     "vite-plugin-dts": "^3.6.4",
+  },
+  "peerDependencies": {
     "@annotorious/annotorious": "github:ShashanKV98/annotorious-subdir#dev",
     "openseadragon": "^4.1.0"
   },
