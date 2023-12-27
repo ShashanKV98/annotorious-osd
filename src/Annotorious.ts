@@ -98,7 +98,6 @@ export const createOSDAnnotator = <E extends unknown = ImageAnnotation>(
     props: { 
       state, 
       viewer, 
-      filter: undefined,
       style: opts.style,
     }
   });
@@ -118,7 +117,6 @@ export const createOSDAnnotator = <E extends unknown = ImageAnnotation>(
       drawingEnabled,
       preferredDrawingMode: drawingMode,
       state,
-      toolName: '',
       user: currentUser, 
       viewer
     }
