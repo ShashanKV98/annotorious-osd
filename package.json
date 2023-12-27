@@ -15,6 +15,7 @@
   },
   "scripts": {
     "start": "vite",
+    "prepare": "npm run build",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "test": "echo 'Skipping tests in @annotorious/openseadragon package'"
