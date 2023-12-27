@@ -17,9 +17,9 @@ interface AnnotationShape {
 
   annotation: ImageAnnotation;
 
-  fill: PIXI.DisplayObject;
+  fill: PIXI.Graphics;
 
-  stroke: PIXI.DisplayObject;
+  stroke: PIXI.Graphics;
 
   strokeWidth: number;
 
@@ -40,10 +40,10 @@ const getGraphicsStyle = (style?: DrawingStyle) => {
   return { fillStyle, strokeStyle };
 }
 
-const drawShape = <T extends Shape>(fn: (s: T, g: PIXI.DisplayObject) => void) => (container: PIXI.DisplayObject, shape: T, style?: DrawingStyle) => {
+const drawShape = <T extends Shape>(fn: (s: T, g: PIXI.Graphics) => void) => (container: PIXI.Graphics, shape: T, style?: DrawingStyle) => {
   const { fillStyle, strokeStyle } = getGraphicsStyle(style);
 
-  const fillGraphics = new PIXI.DisplayObject();
+  const fillGraphics = new PIXI.Graphics();
   fillGraphics.beginFill(0xffffff);
   fn(shape, fillGraphics); 
   fillGraphics.endFill();
@@ -52,7 +52,7 @@ const drawShape = <T extends Shape>(fn: (s: T, g: PIXI.DisplayObject) => void) =
 
   container.addChild(fillGraphics);
     
-  const strokeGraphics = new PIXI.DisplayObject();
+  const strokeGraphics = new PIXI.Graphics();
   strokeGraphics.lineStyle(strokeStyle.lineWidth / lastScale, 0xffffff, 1, 0.5, strokeStyle.lineWidth === 1);
   fn(shape, strokeGraphics); 
   strokeGraphics.tint = strokeStyle.tint;
@@ -63,24 +63,24 @@ const drawShape = <T extends Shape>(fn: (s: T, g: PIXI.DisplayObject) => void) =
   return { fill: fillGraphics, stroke: strokeGraphics, strokeWidth: strokeStyle.lineWidth };
 }
 
-const drawEllipse = drawShape((ellipse: Ellipse, g: PIXI.DisplayObject) => {
+const drawEllipse = drawShape((ellipse: Ellipse, g: PIXI.Graphics) => {
   const { cx, cy, rx, ry } = ellipse.geometry;
   g.drawEllipse(cx, cy, rx, ry)
 });
 
-const drawPolygon = drawShape((polygon: Polygon, g: PIXI.DisplayObject) => {
+const drawPolygon = drawShape((polygon: Polygon, g: PIXI.Graphics) => {
   const flattend = polygon.geometry.points.reduce((flat, xy) => ([...flat, ...xy]), []);   
   g.drawPolygon(flattend);
 });
 
-const drawRectangle = drawShape((rectangle: Rectangle, g: PIXI.DisplayObject) => {
+const drawRectangle = drawShape((rectangle: Rectangle, g: PIXI.Graphics) => {
   const { x, y, w, h } = rectangle.geometry;
   g.drawRect(x, y, w, h);
 });
 
 const redrawStage = (
   viewer: OpenSeadragon.Viewer, 
-  graphics: PIXI.DisplayObject,
+  graphics: PIXI.Graphics,
   shapes: Map<String, AnnotationShape>,
   renderer: PIXI.AbstractRenderer
 ) => () => {
@@ -150,7 +150,7 @@ const redrawStage = (
 
 export const createStage = (viewer: OpenSeadragon.Viewer, canvas: HTMLCanvasElement) => {
 
-  const graphics = new PIXI.DisplayObject();
+  const graphics = new PIXI.Graphics();
 
   const renderer = PIXI.autoDetectRenderer({ 
     width: canvas.width, 
@@ -178,7 +178,7 @@ export const createStage = (viewer: OpenSeadragon.Viewer, canvas: HTMLCanvasElem
 
     const s = typeof style == 'function' ? style(annotation) : style;
 
-    let rendered: { fill: PIXI.DisplayObject, stroke: PIXI.DisplayObject, strokeWidth: number };
+    let rendered: { fill: PIXI.Graphics, stroke: PIXI.Graphics, strokeWidth: number };
 
     if (selector.type === ShapeType.RECTANGLE) {
       rendered = drawRectangle(graphics, selector as Rectangle, s);
