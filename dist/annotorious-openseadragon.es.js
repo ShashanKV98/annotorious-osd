@@ -19170,7 +19170,7 @@ const To = (r) => {
   const s = new sr();
   return s.lineStyle(a.lineWidth / Eo, 16777215, 1, 0.5, a.lineWidth === 1), r(e, s), s.tint = a.tint, s.alpha = a.alpha, t.addChild(s), { fill: o, stroke: s, strokeWidth: a.lineWidth };
 }, B1 = In((r, t) => {
-  const e = D1(r.geometry.points, C1, !0);
+  const e = D1(r.geometry.points, C1);
   S1(e).forEach((n) => {
     switch (n[0]) {
       case "M":

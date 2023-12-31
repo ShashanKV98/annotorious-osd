@@ -66,7 +66,7 @@ const drawShape = <T extends Shape>(fn: (s: T, g: PIXI.Graphics) => void) => (co
 }
 
 const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
-  const pathData = getSmoothPathData(freehand.geometry.points, options, true)
+  const pathData = getSmoothPathData(freehand.geometry.points, options)
   const commands = parse(pathData)
 
   commands.forEach((cmd) => {
