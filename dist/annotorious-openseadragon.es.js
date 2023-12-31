@@ -19180,10 +19180,10 @@ const To = (r) => {
         t.lineTo(n[1], n[2]);
         break;
       case "Q":
-        n.points.length === 4 && t.quadraticCurveTo(n[1], n[2], n[3], n[4]);
+        n.length === 5 && t.quadraticCurveTo(n[1], n[2], n[3], n[4]);
         break;
       case "C":
-        n.points.length === 6 && t.bezierCurveTo(n[1], n[2], n[3], n[4], n[5], n[6]);
+        n.length === 7 && t.bezierCurveTo(n[1], n[2], n[3], n[4], n[5], n[6]);
         break;
       case "Z":
         t.closePath();
