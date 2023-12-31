@@ -2,7 +2,9 @@ import * as PIXI from 'pixi.js';
 import type OpenSeadragon from 'openseadragon';
 import { ShapeType } from '@annotorious/annotorious/src';
 import type { DrawingStyle, Filter, Selection } from '@annotorious/core';
-import type { Ellipse, ImageAnnotation, Polygon, Rectangle, Shape } from '@annotorious/annotorious/src';
+import type { Ellipse, ImageAnnotation, Polygon, Rectangle, Shape, Freehand } from '@annotorious/annotorious/src';
+import parse from 'parse-svg-path'
+import { getSmoothPathData, options } from '../utils/path'
 
 const DEFAULT_FILL = 0x1a73e8;
 const DEFAULT_ALPHA = 0.25;
@@ -63,6 +65,38 @@ const drawShape = <T extends Shape>(fn: (s: T, g: PIXI.Graphics) => void) => (co
   return { fill: fillGraphics, stroke: strokeGraphics, strokeWidth: strokeStyle.lineWidth };
 }
 
+const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
+  const pathData = getSmoothPathData(freehand.geometry.points, options, true)
+  const commands = parse(pathData)
+
+  commands.forEach((cmd) => {
+    switch (cmd[0]) {
+      case 'M': // MoveTo
+        g.moveTo(cmd[1], cmd[2])
+        break
+      case 'L': // LineTo
+        g.lineTo(cmd[1], cmd[2])
+        break
+      case 'Q':
+        if (cmd.points.length === 4) {
+          g.quadraticCurveTo(cmd[1], cmd[2], cmd[3], cmd[4])
+        }
+        break
+      case 'C':
+        if (cmd.points.length === 6) {
+          g.bezierCurveTo(cmd[1], cmd[2], cmd[3], cmd[4], cmd[5], cmd[6])
+        }
+        break
+      case 'Z':
+        g.closePath()
+        break
+      default:
+        console.warn(`Unhandled path command: ${cmd[0]}`)
+    }
+  })
+})
+
+
 const drawEllipse = drawShape((ellipse: Ellipse, g: PIXI.Graphics) => {
   const { cx, cy, rx, ry } = ellipse.geometry;
   g.drawEllipse(cx, cy, rx, ry)
@@ -72,6 +106,7 @@ const drawPolygon = drawShape((polygon: Polygon, g: PIXI.Graphics) => {
   const flattend = polygon.geometry.points.reduce((flat, xy) => ([...flat, ...xy]), []);   
   g.drawPolygon(flattend);
 });
+
 
 const drawRectangle = drawShape((rectangle: Rectangle, g: PIXI.Graphics) => {
   const { x, y, w, h } = rectangle.geometry;
@@ -183,9 +218,11 @@ export const createStage = (viewer: OpenSeadragon.Viewer, canvas: HTMLCanvasElem
     if (selector.type === ShapeType.RECTANGLE) {
       rendered = drawRectangle(graphics, selector as Rectangle, s);
     } else if (selector.type === ShapeType.POLYGON) {
-      rendered = drawPolygon(graphics, selector as Polygon, s);
+      rendered = drawPolygon(graphics, selector as Polygon, s)
+    } else if (selector.type === ShapeType.FREEHAND) {
+      rendered = drawFreehand(graphics, selector as Freehand, s)
     } else if (selector.type === ShapeType.ELLIPSE) {
-      rendered = drawEllipse(graphics, selector as Ellipse, s);
+      rendered = drawEllipse(graphics, selector as Ellipse, s)
     } else {
       console.warn(`Unsupported shape type: ${selector.type}`)
     }
