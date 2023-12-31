@@ -74,9 +74,9 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
       case 'M': // MoveTo
         g.moveTo(cmd[1], cmd[2])
         break
-      case 'L': // LineTo
-        g.lineTo(cmd[1], cmd[2])
-        break
+      // case 'L': // LineTo
+      //   g.lineTo(cmd[1], cmd[2])
+      //   break
       case 'Q':
         if (cmd.length === 5) { // 4 points + 1 type
           g.quadraticCurveTo(cmd[1], cmd[2], cmd[3], cmd[4])

@@ -19176,9 +19176,6 @@ const To = (r) => {
       case "M":
         t.moveTo(n[1], n[2]);
         break;
-      case "L":
-        t.lineTo(n[1], n[2]);
-        break;
       case "Q":
         n.length === 5 && t.quadraticCurveTo(n[1], n[2], n[3], n[4]);
         break;
