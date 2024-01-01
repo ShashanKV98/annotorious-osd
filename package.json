@@ -58,6 +58,7 @@
     "pixi.js": "^7.3.2",
     "pixi-svg": "latest",
     "@pixi-essentials/svg": "latest",
+    "@pixi/graphics-smooth": "latest",
     "uuid": "^9.0.1"
   }
 }

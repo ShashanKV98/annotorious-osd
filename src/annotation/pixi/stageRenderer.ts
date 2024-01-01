@@ -1,5 +1,10 @@
 import * as PIXI from 'pixi.js'
 // import { SVGPathNode } from '@pixi-essentials/svg'
+import {
+  SmoothGraphics,
+  LINE_SCALE_MODE,
+  settings,
+} from '@pixi/graphics-smooth'
 import {SVG} from 'pixi-svg'
 import type OpenSeadragon from 'openseadragon'
 import { ShapeType } from '@annotorious/annotorious/src'
@@ -27,12 +32,15 @@ let lastScale: number
 interface AnnotationShape {
   annotation: ImageAnnotation
 
-  fill: PIXI.Graphics
+  fill: PIXI.Graphics | SmoothGraphics
 
-  stroke: PIXI.Graphics
+  stroke: PIXI.Graphics | SmoothGraphics
 
   strokeWidth: number
 }
+
+settings.PIXEL_LINE = 1
+settings.LINE_SCALE_MODE = LINE_SCALE_MODE.NORMAL
 
 const getGraphicsStyle = (style?: DrawingStyle) => {
   const fillStyle = {
@@ -57,6 +65,42 @@ const getGraphicsStyle = (style?: DrawingStyle) => {
   return { fillStyle, strokeStyle }
 }
 
+const drawPath =
+  <T extends Shape>(fn: (s: T, g: SmoothGraphics) => void) =>
+  (container: PIXI.Graphics, shape: T, style?: DrawingStyle) => {
+    const { fillStyle, strokeStyle } = getGraphicsStyle(style)
+
+    // const fillGraphics = new PIXI.Graphics()
+    const fillGraphics = new SmoothGraphics()
+    fillGraphics.beginFill(0xffffff)
+    fn(shape, fillGraphics)
+    fillGraphics.endFill()
+    fillGraphics.tint = fillStyle.tint
+    fillGraphics.alpha = fillStyle.alpha
+
+    container.addChild(fillGraphics)
+
+    // const strokeGraphics = new PIXI.Graphics()
+    const strokeGraphics = new SmoothGraphics()
+    strokeGraphics.lineStyle(
+      strokeStyle.lineWidth / lastScale,
+      0xffffff,
+      1,
+      1,
+    )
+
+    fn(shape, strokeGraphics)
+    strokeGraphics.tint = strokeStyle.tint
+    strokeGraphics.alpha = strokeStyle.alpha
+    container.addChild(strokeGraphics)
+
+    return {
+      fill: fillGraphics,
+      stroke: strokeGraphics,
+      strokeWidth: strokeStyle.lineWidth,
+    }
+  }
+
 const drawShape =
   <T extends Shape>(fn: (s: T, g: PIXI.Graphics) => void) =>
   (container: PIXI.Graphics, shape: T, style?: DrawingStyle) => {
@@ -72,12 +116,13 @@ const drawShape =
     container.addChild(fillGraphics)
 
     const strokeGraphics = new PIXI.Graphics()
+    // const strokeGraphics = new SmoothGraphics()
     strokeGraphics.lineStyle(
       strokeStyle.lineWidth / lastScale,
       0xffffff,
       1,
       0.5,
-      true
+      false
     )
     
     fn(shape, strokeGraphics)
@@ -92,7 +137,7 @@ const drawShape =
     }
   }
 
-const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
+const drawFreehand = drawPath((freehand: Freehand, g: SmoothGraphics) => {
   const commands = getSvgPathArraysfromPoints(freehand.geometry.points, options,false)
   // const commands = parse(pathData)
   // let lastControlX, lastControlY;
@@ -206,10 +251,12 @@ const redrawStage =
 
           // @ts-ignore
           stroke.geometry.invalidate()
-        } else if (strokeWidth === 1 && !lineStyle.native) {
+        } 
+        // else if (strokeWidth === 1 && !lineStyle.native) {
+          else if (strokeWidth === 1){
           // Set native stroke if necessary
           lineStyle.width = 1
-          lineStyle.native = true
+          // lineStyle.native = true
 
           // @ts-ignore
           stroke.geometry.invalidate()
@@ -284,8 +331,8 @@ export const createStage = (
     const s = typeof style == 'function' ? style(annotation) : style
 
     let rendered: {
-      fill: PIXI.Graphics
-      stroke: PIXI.Graphics
+      fill: PIXI.Graphics | SmoothGraphics
+      stroke: PIXI.Graphics | SmoothGraphics
       strokeWidth: number
     }
 
