@@ -24881,7 +24881,7 @@ function uv(r, t, e) {
 const dv = {
   size: 4,
   thinning: 0.3,
-  smoothing: 1.5,
+  smoothing: 0.5,
   streamline: 0.5,
   easing: (r) => r,
   start: {
@@ -26360,7 +26360,7 @@ function $v(r, t, e) {
 const Yv = {
   size: 4,
   thinning: 0.3,
-  smoothing: 1.5,
+  smoothing: 0.5,
   streamline: 0.5,
   easing: (r) => r,
   start: {
