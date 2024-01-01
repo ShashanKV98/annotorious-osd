@@ -102,9 +102,13 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
     switch (type) {
       case 'M': // MoveTo
         g.moveTo(points[0], points[1])
+        lastCommand = 'M'
         break
       case 'Q':
         g.quadraticCurveTo(points[0], points[1], points[2], points[3])
+        lastControlX = points[0]
+        lastControlY = points[1]
+        lastCommand = 'Q'
         break
       case 'T':
         if (
@@ -121,7 +125,9 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
         } else {
           // Treat it as a line to the endpoint if there's no previous control point
           g.lineTo(points[0], points[1])
+          
         }
+        lastCommand = 'T'
         break
 
       // case 'C':
@@ -131,6 +137,7 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
       //   break
       case 'Z':
         g.closePath()
+        lastCommand = 'Z'
         break
       default:
         console.warn(`Unhandled path command: ${type}`)

@@ -26393,23 +26393,30 @@ const Zo = (r) => {
     strokeWidth: n.lineWidth
   };
 }, Yv = nn((r, t) => {
-  Wv(r.geometry.points, Xv).forEach((i) => {
-    const [s, ...n] = i;
-    switch (s) {
+  const e = Wv(r.geometry.points, Xv);
+  let i, s, n = "";
+  e.forEach((o) => {
+    const [a, ...h] = o;
+    switch (a) {
       case "M":
-        t.moveTo(n[0], n[1]);
+        t.moveTo(h[0], h[1]), n = "M";
         break;
       case "Q":
-        t.quadraticCurveTo(n[0], n[1], n[2], n[3]);
+        t.quadraticCurveTo(h[0], h[1], h[2], h[3]), i = h[0], s = h[1], n = "Q";
         break;
       case "T":
-        t.lineTo(n[0], n[1]);
+        if (i !== void 0 && s !== void 0 && (n === "Q" || n === "T")) {
+          const [l, c] = h, u = 2 * l - i, d = 2 * c - s;
+          t.quadraticCurveTo(u, d, l, c), i = u, s = d;
+        } else
+          t.lineTo(h[0], h[1]);
+        n = "T";
         break;
       case "Z":
-        t.closePath();
+        t.closePath(), n = "Z";
         break;
       default:
-        console.warn(`Unhandled path command: ${s}`);
+        console.warn(`Unhandled path command: ${a}`);
         break;
     }
   });
