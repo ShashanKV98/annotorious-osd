@@ -44,7 +44,7 @@ export function getSmoothPathData(
 ) {
   const stroke = getStroke(points, options)
   const pathData = getSvgPathFromStroke(
-    simplifyPath ? simplify(stroke, 0.25) : stroke
+    simplifyPath ? simplify(stroke, 0.5) : stroke
   )
   return pathData
 }

@@ -19149,7 +19149,7 @@ function M1(r) {
 function D1(r, t, e = !1) {
   const i = ml(r, t);
   return M1(
-    e ? I1(i, 0.25) : i
+    e ? I1(i, 0.5) : i
   );
 }
 const F1 = 1733608, N1 = 0.25;
@@ -19170,11 +19170,14 @@ const To = (r) => {
   const s = new sr();
   return s.lineStyle(a.lineWidth / Eo, 16777215, 1, 0.5, a.lineWidth === 1), r(e, s), s.tint = a.tint, s.alpha = a.alpha, t.addChild(s), { fill: o, stroke: s, strokeWidth: a.lineWidth };
 }, B1 = In((r, t) => {
-  const e = D1(r.geometry.points, C1);
+  const e = D1(r.geometry.points, C1, !0);
   S1(e).forEach((n) => {
     switch (n[0]) {
       case "M":
         t.moveTo(n[1], n[2]);
+        break;
+      case "L":
+        t.lineTo(n[1], n[2]);
         break;
       case "Q":
         n.length === 5 && t.quadraticCurveTo(n[1], n[2], n[3], n[4]);

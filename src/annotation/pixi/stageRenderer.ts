@@ -66,7 +66,7 @@ const drawShape = <T extends Shape>(fn: (s: T, g: PIXI.Graphics) => void) => (co
 }
 
 const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
-  const pathData = getSmoothPathData(freehand.geometry.points, options)
+  const pathData = getSmoothPathData(freehand.geometry.points, options,true)
   const commands = parse(pathData)
 
   commands.forEach((cmd) => {
@@ -74,9 +74,9 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
       case 'M': // MoveTo
         g.moveTo(cmd[1], cmd[2])
         break
-      // case 'L': // LineTo
-      //   g.lineTo(cmd[1], cmd[2])
-      //   break
+      case 'L': // LineTo
+        g.lineTo(cmd[1], cmd[2])
+        break
       case 'Q':
         if (cmd.length === 5) { // 4 points + 1 type
           g.quadraticCurveTo(cmd[1], cmd[2], cmd[3], cmd[4])
