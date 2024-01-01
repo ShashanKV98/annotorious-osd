@@ -95,7 +95,8 @@ const drawShape =
 const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
   const commands = getSvgPathArraysfromPoints(freehand.geometry.points, options)
   // const commands = parse(pathData)
-  let lastControlX, lastControlY
+  let lastControlX, lastControlY;
+  let lastCommand = '';
   commands.forEach((cmd) => {
     const [type, ...points] = cmd
     switch (type) {
@@ -106,9 +107,11 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
         g.quadraticCurveTo(points[0], points[1], points[2], points[3])
         break
       case 'T':
-        // Draw a smooth quadratic bezier curve
-        if (lastControlX !== undefined && lastControlY !== undefined) {
-          // Reflect the last control point relative to the current point
+        if (
+          lastControlX !== undefined &&
+          lastControlY !== undefined &&
+          (lastCommand === 'Q' || lastCommand === 'T')
+        ) {
           const [endX, endY] = points
           const newControlX = 2 * endX - lastControlX
           const newControlY = 2 * endY - lastControlY
@@ -116,11 +119,11 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
           lastControlX = newControlX
           lastControlY = newControlY
         } else {
-          // If there's no previous control point, this is the first command;
-          // treat it like a simple line to the given point.
+          // Treat it as a line to the endpoint if there's no previous control point
           g.lineTo(points[0], points[1])
         }
         break
+
       // case 'C':
       //   if (cmd.length === 7) {
       //     g.bezierCurveTo(cmd[1], cmd[2], cmd[3], cmd[4], cmd[5], cmd[6])
