@@ -1,5 +1,6 @@
 import * as PIXI from 'pixi.js'
 // import { SVGPathNode } from '@pixi-essentials/svg'
+import {SVG} from 'pixi-svg'
 import type OpenSeadragon from 'openseadragon'
 import { ShapeType } from '@annotorious/annotorious/src'
 import type { DrawingStyle, Filter, Selection } from '@annotorious/core'
@@ -12,7 +13,7 @@ import type {
   Freehand,
 } from '@annotorious/annotorious/src'
 import parse from 'parse-svg-path'
-import { getSmoothPathData, options } from '../utils/path'
+import { getSvgPathArraysfromPoints, options } from '../utils/path'
 
 const DEFAULT_FILL = 0x1a73e8
 const DEFAULT_ALPHA = 0.25
@@ -62,18 +63,15 @@ const drawShape =
     const { fillStyle, strokeStyle } = getGraphicsStyle(style)
 
     const fillGraphics = new PIXI.Graphics()
-
-    // fillGraphics.beginFill(0xffffff)
-    // fn(shape, fillGraphics)
-    // fillGraphics.endFill()
-    // fillGraphics.tint = fillStyle.tint
-    // fillGraphics.alpha = fillStyle.alpha
-
+    fillGraphics.beginFill(0xffffff)
+    fn(shape, fillGraphics)
+    fillGraphics.endFill()
+    fillGraphics.tint = fillStyle.tint
+    fillGraphics.alpha = fillStyle.alpha
     
     container.addChild(fillGraphics)
 
     const strokeGraphics = new PIXI.Graphics()
-    strokeGraphics.beginFill(fillStyle.tint, fillStyle.alpha)
     strokeGraphics.lineStyle(
       strokeStyle.lineWidth / lastScale,
       0xffffff,
@@ -85,7 +83,6 @@ const drawShape =
     fn(shape, strokeGraphics)
     strokeGraphics.tint = strokeStyle.tint
     strokeGraphics.alpha = strokeStyle.alpha
-    strokeGraphics.endFill()
     container.addChild(strokeGraphics)
 
     return {
@@ -96,20 +93,32 @@ const drawShape =
   }
 
 const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
-  const pathData = getSmoothPathData(freehand.geometry.points, options, true)
-  const commands = parse(pathData)
+  const commands = getSvgPathArraysfromPoints(freehand.geometry.points, options)
+  // const commands = parse(pathData)
+  let lastControlX, lastControlY
   commands.forEach((cmd) => {
-    switch (cmd[0]) {
+    const [type, ...points] = cmd
+    switch (type) {
       case 'M': // MoveTo
-        g.moveTo(cmd[1], cmd[2])
+        g.moveTo(points[0], points[1])
         break
-      // case 'L': // LineTo
-      //   g.lineTo(cmd[1], cmd[2])
-      //   break
       case 'Q':
-        if (cmd.length === 5) {
-          // 4 points + 1 type
-          g.quadraticCurveTo(cmd[1], cmd[2], cmd[3], cmd[4])
+        g.quadraticCurveTo(points[0], points[1], points[2], points[3])
+        break
+      case 'T':
+        // Draw a smooth quadratic bezier curve
+        if (lastControlX !== undefined && lastControlY !== undefined) {
+          // Reflect the last control point relative to the current point
+          const [endX, endY] = points
+          const newControlX = 2 * endX - lastControlX
+          const newControlY = 2 * endY - lastControlY
+          g.quadraticCurveTo(newControlX, newControlY, endX, endY)
+          lastControlX = newControlX
+          lastControlY = newControlY
+        } else {
+          // If there's no previous control point, this is the first command;
+          // treat it like a simple line to the given point.
+          g.lineTo(points[0], points[1])
         }
         break
       // case 'C':
@@ -121,7 +130,8 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
         g.closePath()
         break
       default:
-        console.warn(`Unhandled path command: ${cmd[0]}`)
+        console.warn(`Unhandled path command: ${type}`)
+        break
     }
   })
 })

@@ -1,22 +1,5 @@
-type GenericObject = Record<string, unknown>;
-export declare const options: {
-    size: number;
-    thinning: number;
-    smoothing: number;
-    streamline: number;
-    easing: (t: any) => any;
-    start: {
-        taper: number;
-        easing: (t: any) => any;
-        cap: boolean;
-    };
-    end: {
-        taper: number;
-        easing: (t: any) => any;
-        cap: boolean;
-    };
-};
-export declare function getSvgPathFromStroke(stroke: any): any;
-export declare function getSmoothPathData(points: Array<Array<number>>, options: GenericObject, simplifyPath?: Boolean): any;
-export {};
+import { type StrokeOptions } from 'perfect-freehand';
+export declare const options: StrokeOptions;
+export declare function getSvgPathArraysfromPoints(points: Array<Array<number>>, options: StrokeOptions): any[];
+export declare function getSmoothPathData(points: Array<Array<number>>, options: StrokeOptions, simplifyPath?: Boolean): string;
 //# sourceMappingURL=path.d.ts.map
