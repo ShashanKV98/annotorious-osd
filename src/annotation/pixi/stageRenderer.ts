@@ -13,7 +13,7 @@ import type {
   Freehand,
 } from '@annotorious/annotorious/src'
 import parse from 'parse-svg-path'
-import { getSvgPathArraysfromPoints, options } from '../utils/path'
+import { getSvgPathArraysfromPoints,getSmoothPathData, options } from '../utils/path'
 
 const DEFAULT_FILL = 0x1a73e8
 const DEFAULT_ALPHA = 0.25
@@ -93,8 +93,8 @@ const drawShape =
   }
 
 const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
-  const commands = getSvgPathArraysfromPoints(freehand.geometry.points, options)
-  // const commands = parse(pathData)
+  const pathData = getSmoothPathData(freehand.geometry.points, options)
+  const commands = parse(pathData)
   let lastControlX, lastControlY;
   let lastCommand = '';
   commands.forEach((cmd) => {
