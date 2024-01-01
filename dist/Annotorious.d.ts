@@ -3,7 +3,6 @@ import type { SvelteComponent } from 'svelte';
 import type { Annotator } from '@annotorious/core';
 import type { AnnotoriousOpts, DrawingTool, DrawingToolOpts, ImageAnnotation, ShapeType } from '@annotorious/annotorious';
 import { type FitboundsOptions } from './api';
-
 export interface OpenSeadragonAnnotator<E extends unknown = ImageAnnotation> extends Annotator<ImageAnnotation, E> {
     viewer: OpenSeadragon.Viewer;
     fitBounds(arg: {

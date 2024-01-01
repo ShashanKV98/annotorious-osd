@@ -175,11 +175,10 @@ export const createOSDAnnotator = <E extends unknown = ImageAnnotation>(
 
   const setDrawingTool = (name: DrawingTool) => {
     // Validate that the tool exists
-    const toolSpec = getTool(name);
-    if (!toolSpec)
-      throw `No drawing tool named ${name}`;
-    
-    drawingLayer.$set({ toolName: name });
+    const toolSpec = getTool(name)
+    if (!toolSpec) throw `No drawing tool named ${name}`
+    // @ts-ignore
+    drawingLayer.$set({ toolName: name })
   }
 
   const setDrawingEnabled = (enabled: boolean) => {
@@ -188,7 +187,8 @@ export const createOSDAnnotator = <E extends unknown = ImageAnnotation>(
   }
 
   const setFilter = (filter: Filter) =>
-    displayLayer.$set({ filter });
+    // @ts-ignore
+    displayLayer.$set({ filter })
 
   const setStyle = (style: DrawingStyle | ((annotation: ImageAnnotation) => DrawingStyle) | undefined) =>
     displayLayer.$set({ style });
