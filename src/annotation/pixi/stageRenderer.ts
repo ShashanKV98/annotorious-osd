@@ -40,7 +40,7 @@ interface AnnotationShape {
 }
 
 settings.PIXEL_LINE = 1
-settings.LINE_SCALE_MODE = LINE_SCALE_MODE.NORMAL
+settings.LINE_SCALE_MODE = LINE_SCALE_MODE.NONE
 
 const getGraphicsStyle = (style?: DrawingStyle) => {
   const fillStyle = {
@@ -86,7 +86,8 @@ const drawPath =
       strokeStyle.lineWidth / lastScale,
       0xffffff,
       1,
-      1,
+      0,
+      
     )
 
     fn(shape, strokeGraphics)

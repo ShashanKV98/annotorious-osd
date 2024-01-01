@@ -28075,7 +28075,7 @@ function V1(i, t, e) {
 const X1 = 1733608, z1 = 0.25;
 let qe = !1, hn;
 gi.PIXEL_LINE = 1;
-gi.LINE_SCALE_MODE = _i.NORMAL;
+gi.LINE_SCALE_MODE = _i.NONE;
 const ln = (i) => {
   const t = {
     tint: i != null && i.fill ? Nh(i.fill) : X1,
@@ -28094,7 +28094,7 @@ const ln = (i) => {
     n.lineWidth / hn,
     16777215,
     1,
-    1
+    0
   ), i(e, o), o.tint = n.tint, o.alpha = n.alpha, t.addChild(o), {
     fill: a,
     stroke: o,
