@@ -1,5 +1,5 @@
-
 import * as PIXI from 'pixi.js'
+// import { SVGPathNode } from '@pixi-essentials/svg'
 import type OpenSeadragon from 'openseadragon'
 import { ShapeType } from '@annotorious/annotorious/src'
 import type { DrawingStyle, Filter, Selection } from '@annotorious/core'
@@ -62,11 +62,11 @@ const drawShape =
     const { fillStyle, strokeStyle } = getGraphicsStyle(style)
 
     const fillGraphics = new PIXI.Graphics()
-    fillGraphics.beginFill(0xffffff)
-    fn(shape, fillGraphics)
-    fillGraphics.endFill()
-    fillGraphics.tint = fillStyle.tint
-    fillGraphics.alpha = fillStyle.alpha
+    // fillGraphics.beginFill(0xffffff)
+    // fn(shape, fillGraphics)
+    // fillGraphics.endFill()
+    // fillGraphics.tint = fillStyle.tint
+    // fillGraphics.alpha = fillStyle.alpha
 
     container.addChild(fillGraphics)
 
@@ -94,26 +94,25 @@ const drawShape =
 const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
   const pathData = getSmoothPathData(freehand.geometry.points, options, true)
   const commands = parse(pathData)
-
   commands.forEach((cmd) => {
     switch (cmd[0]) {
       case 'M': // MoveTo
         g.moveTo(cmd[1], cmd[2])
         break
-      case 'L': // LineTo
-        g.lineTo(cmd[1], cmd[2])
-        break
+      // case 'L': // LineTo
+      //   g.lineTo(cmd[1], cmd[2])
+      //   break
       case 'Q':
         if (cmd.length === 5) {
           // 4 points + 1 type
           g.quadraticCurveTo(cmd[1], cmd[2], cmd[3], cmd[4])
         }
         break
-      case 'C':
-        if (cmd.length === 7) {
-          g.bezierCurveTo(cmd[1], cmd[2], cmd[3], cmd[4], cmd[5], cmd[6])
-        }
-        break
+      // case 'C':
+      //   if (cmd.length === 7) {
+      //     g.bezierCurveTo(cmd[1], cmd[2], cmd[3], cmd[4], cmd[5], cmd[6])
+      //   }
+      //   break
       case 'Z':
         g.closePath()
         break
@@ -138,7 +137,7 @@ const drawPolygon = drawShape((polygon: Polygon, g: PIXI.Graphics) => {
 
 const drawRectangle = drawShape((rectangle: Rectangle, g: PIXI.Graphics) => {
   const { x, y, w, h } = rectangle.geometry
-  g.drawRoundedRect(x, y, w, h, 6)
+  g.drawRoundedRect(x, y, w, h, 4)
 })
 
 const redrawStage =
