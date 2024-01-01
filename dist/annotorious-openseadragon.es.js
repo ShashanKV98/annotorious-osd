@@ -26418,7 +26418,7 @@ const Zo = (r) => {
     strokeWidth: n.lineWidth
   };
 }, Jv = sn((r, t) => {
-  Kv(r.geometry.points, Yv, !0).forEach((i) => {
+  Kv(r.geometry.points, Yv, !1).forEach((i) => {
     const [s, ...n] = i;
     switch (s) {
       case "M":
