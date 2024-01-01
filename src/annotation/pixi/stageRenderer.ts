@@ -110,7 +110,7 @@ const drawPolygon = drawShape((polygon: Polygon, g: PIXI.Graphics) => {
 
 const drawRectangle = drawShape((rectangle: Rectangle, g: PIXI.Graphics) => {
   const { x, y, w, h } = rectangle.geometry;
-  g.drawRect(x, y, w, h);
+  g.drawRoundedRect(x, y, w, h,6);
 });
 
 const redrawStage = (

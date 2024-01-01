@@ -19200,7 +19200,7 @@ const To = (r) => {
   t.drawPolygon(e);
 }), G1 = In((r, t) => {
   const { x: e, y: i, w: n, h: a } = r.geometry;
-  t.drawRect(e, i, n, a);
+  t.drawRoundedRect(e, i, n, a, 6);
 }), k1 = (r, t, e, i) => () => {
   const n = r.viewport.viewportToImageRectangle(r.viewport.getBounds(!0)), a = r.viewport.getContainerSize().x, s = r.viewport.getZoom(!0) * a / r.world.getContentFactor();
   s !== Eo && !Ie && (Ie = !0, e.forEach(({ stroke: d, strokeWidth: p }) => {
