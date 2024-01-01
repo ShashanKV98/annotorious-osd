@@ -62,26 +62,30 @@ const drawShape =
     const { fillStyle, strokeStyle } = getGraphicsStyle(style)
 
     const fillGraphics = new PIXI.Graphics()
+
     // fillGraphics.beginFill(0xffffff)
     // fn(shape, fillGraphics)
     // fillGraphics.endFill()
     // fillGraphics.tint = fillStyle.tint
     // fillGraphics.alpha = fillStyle.alpha
 
+    
     container.addChild(fillGraphics)
 
     const strokeGraphics = new PIXI.Graphics()
+    strokeGraphics.beginFill(fillStyle.tint, fillStyle.alpha)
     strokeGraphics.lineStyle(
       strokeStyle.lineWidth / lastScale,
       0xffffff,
       1,
       0.5,
-      strokeStyle.lineWidth === 1
+      strokeStyle.lineWidth === 2
     )
+    
     fn(shape, strokeGraphics)
     strokeGraphics.tint = strokeStyle.tint
     strokeGraphics.alpha = strokeStyle.alpha
-
+    strokeGraphics.endFill()
     container.addChild(strokeGraphics)
 
     return {

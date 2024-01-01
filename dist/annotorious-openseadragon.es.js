@@ -26131,13 +26131,13 @@ const Qo = (r) => {
   const { fillStyle: s, strokeStyle: n } = Qo(i), o = new Mi();
   t.addChild(o);
   const a = new Mi();
-  return a.lineStyle(
+  return a.beginFill(s.tint, s.alpha), a.lineStyle(
     n.lineWidth / Zo,
     16777215,
     1,
     0.5,
-    n.lineWidth === 1
-  ), r(e, a), a.tint = n.tint, a.alpha = n.alpha, t.addChild(a), {
+    n.lineWidth === 2
+  ), r(e, a), a.tint = n.tint, a.alpha = n.alpha, a.endFill(), t.addChild(a), {
     fill: o,
     stroke: a,
     strokeWidth: n.lineWidth
