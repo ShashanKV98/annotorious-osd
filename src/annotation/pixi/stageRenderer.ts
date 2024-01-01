@@ -77,7 +77,7 @@ const drawShape =
       0xffffff,
       1,
       0.5,
-      strokeStyle.lineWidth === 2
+      true
     )
     
     fn(shape, strokeGraphics)
