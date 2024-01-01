@@ -4,7 +4,7 @@ import simplify from './simplify'
 export const options: StrokeOptions = {
   size: 4,
   thinning: 0.3,
-  smoothing: 0,
+  smoothing: 1.5,
   streamline: 0.5,
   easing: (t) => t,
   start: {
