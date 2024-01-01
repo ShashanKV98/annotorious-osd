@@ -26379,8 +26379,8 @@ function qv(r, t = !0) {
     return [];
   const e = [["M", ...r[0]]];
   for (let i = 0; i < r.length - 1; i++) {
-    const [s, n] = r[i], [o, a] = r[i + 1], h = s, l = n, c = (s + o) / 2, u = (n + a) / 2;
-    e.push(["Q", h, l, c, u]);
+    const [s, n] = r[i], [o, a] = r[i + 1], h = s, l = n, c = o, u = a;
+    e.push(["C", h, l, c, u, o, a]);
   }
   return r.length > 2 && e.push(["Z"]), e;
 }
@@ -26423,6 +26423,16 @@ const Zo = (r) => {
     switch (s) {
       case "M":
         t.moveTo(n[0], n[1]);
+        break;
+      case "C":
+        t.bezierCurveTo(
+          n[0],
+          n[1],
+          n[2],
+          n[3],
+          n[4],
+          n[5]
+        );
         break;
       case "Q":
         t.quadraticCurveTo(n[0], n[1], n[2], n[3]);

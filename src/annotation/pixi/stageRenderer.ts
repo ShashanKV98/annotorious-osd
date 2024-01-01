@@ -104,6 +104,16 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
         g.moveTo(points[0], points[1])
         // lastCommand = 'M'
         break
+      case 'C':
+        g.bezierCurveTo(
+          points[0],
+          points[1],
+          points[2],
+          points[3],
+          points[4],
+          points[5]
+        )
+        break
       case 'Q':
         g.quadraticCurveTo(points[0], points[1], points[2], points[3])
         // lastControlX = points[0]
@@ -125,7 +135,7 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
       //   } else {
       //     // Treat it as a line to the endpoint if there's no previous control point
       //     g.lineTo(points[0], points[1])
-          
+
       //   }
       //   lastCommand = 'T'
       //   break
