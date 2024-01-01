@@ -3,8 +3,8 @@ import simplify from './simplify'
 
 export const options: StrokeOptions = {
   size: 4,
-  thinning: 0.5,
-  smoothing: 0.5,
+  thinning: 0,
+  smoothing: 0,
   streamline: 0.5,
   easing: (t) => t,
   start: {
@@ -125,7 +125,7 @@ export function getSvgPathArraysfromPoints(
   options: StrokeOptions,
   simplifyPath : Boolean
 ){
-  // const stroke = getStroke(points,options)
+  const stroke = getStroke(points,options)
   const pathArrays = convertPointsToArrays(
     simplifyPath ? simplify(points, 0.5) : points
   )
