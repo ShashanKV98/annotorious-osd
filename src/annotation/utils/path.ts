@@ -3,8 +3,8 @@ import simplify from './simplify'
 
 export const options: StrokeOptions = {
   size: 4,
-  thinning: 0,
-  smoothing: 0,
+  thinning: 0.5,
+  smoothing: 1,
   streamline: 0.5,
   easing: (t) => t,
   start: {
