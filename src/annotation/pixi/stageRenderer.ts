@@ -185,6 +185,11 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
         g.moveTo(points[0], points[1])
         // lastCommand = 'M'
         break
+      case 'L': // MoveTo
+        g.lineTo(points[0], points[1])
+        // lastCommand = 'M'
+        break
+
       case 'C':
         g.bezierCurveTo(
           points[0],

@@ -54,48 +54,52 @@ function getSvgPathFromStroke(points, closed = true) {
   return result
 }
 
-function convertPointsToArrays(points, closed =true){
-  if (!points.length) return []
+function convertPointsToArrays(stroke, closed =true){
+  // if (!points.length) return []
 
-  const commands = [['M', ...points[0]]] // Start with the 'Move' command
+  // const commands = [['M', ...points[0]]] // Start with the 'Move' command
 
-  // Iterate through each point in the stroke to build 'Q' commands
-  for (let i = 0; i < points.length - 1; i++) {
-    const [x0, y0] = points[i]
-    const [x1, y1] = points[i + 1]
-    const controlX = x0 // Using the current point as the control point
-    const controlY = y0
-    const endX = (x0 + x1) / 2 // The midpoint between the current and next point
-    const endY = (y0 + y1) / 2
+  // // Iterate through each point in the stroke to build 'Q' commands
+  // for (let i = 0; i < points.length - 1; i++) {
+  //   const [x0, y0] = points[i]
+  //   const [x1, y1] = points[i + 1]
+  //   const controlX = x0 // Using the current point as the control point
+  //   const controlY = y0
+  //   const endX = (x0 + x1) / 2 // The midpoint between the current and next point
+  //   const endY = (y0 + y1) / 2
 
-    // Add a 'Q' command for the quadratic curve
-    commands.push(['Q', controlX, controlY, endX, endY])
-  }
-
-  // Close the path if it's not a line
-  if (points.length > 2) {
-    commands.push(['Z']) // Close the path
-  }
-  // if (!stroke.length) return []
-
-  // const commands = [['M', ...stroke[0]]] // Start with the 'Move' command
-
-  // for (let i = 0; i < stroke.length - 1; i++) {
-  //   const [x0, y0] = stroke[i]
-  //   const [x1, y1] = stroke[i + 1]
-  //   const control1X = x0 // This simplistic approach uses the segment's endpoints as control points.
-  //   const control1Y = y0 // You'd likely want a more sophisticated approach for real applications.
-  //   const control2X = x1
-  //   const control2Y = y1
-
-  //   // Add a 'C' command for the cubic curve
-  //   commands.push(['C', control1X, control1Y, control2X, control2Y, x1, y1])
+  //   // Add a 'Q' command for the quadratic curve
+  //   commands.push(['Q', controlX, controlY, endX, endY])
   // }
 
   // // Close the path if it's not a line
-  // if (stroke.length > 2) {
+  // if (points.length > 2) {
   //   commands.push(['Z']) // Close the path
   // }
+  if (!stroke.length) return []
+
+  const commands = [['M', ...stroke[0]]] // Start with the 'Move' command
+
+  for (let i = 0; i < stroke.length ; i++) {
+    const [x, y] = stroke[i]
+
+    // Add an 'L' command for the line
+    commands.push(['L', x, y])
+    // const [x0, y0] = stroke[i]
+    // const [x1, y1] = stroke[i + 1]
+    // const control1X = x0 // This simplistic approach uses the segment's endpoints as control points.
+    // const control1Y = y0 // You'd likely want a more sophisticated approach for real applications.
+    // const control2X = x1
+    // const control2Y = y1
+
+    // // Add a 'C' command for the cubic curve
+    // commands.push(['C', control1X, control1Y, control2X, control2Y, x1, y1])
+  }
+
+  // Close the path if it's not a line
+  if (stroke.length > 2) {
+    commands.push(['Z']) // Close the path
+  }
 
   return commands
 
