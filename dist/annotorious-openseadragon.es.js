@@ -26411,10 +26411,10 @@ const Qo = (r) => {
   o.beginFill(16777215, 0), r(e, o), o.endFill(), o.tint = s.tint, o.alpha = s.alpha, t.addChild(o);
   const a = new Mi();
   return a.lineStyle({
-    width: n.lineWidth / Zo,
+    width: 4 * n.lineWidth / Zo,
     color: 16777215,
     alpha: 1,
-    alignment: 0.5,
+    alignment: 1,
     native: !0,
     join: $t.MITER,
     miterLimit: 500

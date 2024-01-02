@@ -126,10 +126,10 @@ const drawShape =
     //   false
     // )
     strokeGraphics.lineStyle({
-      width: strokeStyle.lineWidth / lastScale,
+      width: 4 * strokeStyle.lineWidth / lastScale,
       color: 0xffffff,
       alpha: 1,
-      alignment: 0.5,
+      alignment: 1,
       native:true,
       join: PIXI.LINE_JOIN.MITER,
       miterLimit: 500,
