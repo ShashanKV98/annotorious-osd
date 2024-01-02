@@ -28094,7 +28094,7 @@ const po = (i) => {
     alpha: 1,
     alignment: 0.5,
     native: !0,
-    join: Bt.ROUND,
+    join: Bt.BEVEL,
     miterLimit: 10
   }), i(e, o), o.tint = n.tint, o.alpha = n.alpha, t.addChild(o), {
     fill: a,
