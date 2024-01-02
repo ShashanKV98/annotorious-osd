@@ -26408,7 +26408,7 @@ const Qo = (r) => {
   return { fillStyle: t, strokeStyle: e };
 }, nn = (r) => (t, e, i) => {
   const { fillStyle: s, strokeStyle: n } = Qo(i), o = new Mi();
-  o.beginFill(16777215), r(e, o), o.endFill(), o.tint = s.tint, o.alpha = s.alpha, t.addChild(o);
+  o.beginFill(16777215, 0), r(e, o), o.endFill(), o.tint = s.tint, o.alpha = s.alpha, t.addChild(o);
   const a = new Mi();
   return a.lineStyle({
     width: n.lineWidth / Zo,
