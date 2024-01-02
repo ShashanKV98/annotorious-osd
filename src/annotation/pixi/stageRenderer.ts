@@ -131,8 +131,8 @@ const drawShape =
       alpha: 1,
       alignment: 0.5,
       native:true,
-      join: PIXI.LINE_JOIN.BEVEL,
-      miterLimit: 10,
+      join: PIXI.LINE_JOIN.MITER,
+      miterLimit: 0.05,
     })
     
     fn(shape, strokeGraphics)
