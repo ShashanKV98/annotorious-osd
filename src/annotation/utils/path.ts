@@ -147,9 +147,9 @@ export function getSvgPathArraysfromPoints(
   options: StrokeOptions,
   simplifyPath: Boolean
 ) {
-  // const stroke = getStroke(points,options)
+  const stroke = getStroke(points,options)
   const pathArrays = convertPointsToArrays(
-    simplifyPath ? simplify(points, 1) : points
+    simplifyPath ? simplify(stroke, 0.5) : stroke
   )
   return pathArrays
 }
