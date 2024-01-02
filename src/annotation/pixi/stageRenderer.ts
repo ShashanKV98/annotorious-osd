@@ -44,7 +44,7 @@ interface AnnotationShape {
 
 const getGraphicsStyle = (style?: DrawingStyle) => {
   const fillStyle = {
-    tint: style?.fill ? PIXI.utils.string2hex(style.fill) : DEFAULT_FILL,
+    tint: style?.fill ? new PIXI.Color(style.fill).toHex() : DEFAULT_FILL,
     alpha:
       style?.fillOpacity === undefined
         ? DEFAULT_ALPHA
@@ -52,7 +52,7 @@ const getGraphicsStyle = (style?: DrawingStyle) => {
   }
 
   const strokeStyle = {
-    tint: style?.stroke && PIXI.utils.string2hex(style.stroke),
+    tint: style?.stroke && new PIXI.Color(style.stroke).toHex(),
     alpha:
       style?.strokeOpacity === undefined
         ? style.stroke
