@@ -21,38 +21,38 @@ export const options: StrokeOptions = {
 
 const average = (a, b) => (a + b) / 2
 
-// function getSvgPathFromStroke(points, closed = true) {
-//   const len = points.length
+function getSvgPathFromStroke(points, closed = true) {
+  const len = points.length
 
-//   if (len < 4) {
-//     return ``
-//   }
+  if (len < 4) {
+    return ``
+  }
 
-//   let a = points[0]
-//   let b = points[1]
-//   const c = points[2]
+  let a = points[0]
+  let b = points[1]
+  const c = points[2]
 
-//   let result = `M${a[0].toFixed(2)},${a[1].toFixed(2)} Q${b[0].toFixed(
-//     2
-//   )},${b[1].toFixed(2)} ${average(b[0], c[0]).toFixed(2)},${average(
-//     b[1],
-//     c[1]
-//   ).toFixed(2)} T`
+  let result = `M${a[0].toFixed(2)},${a[1].toFixed(2)} Q${b[0].toFixed(
+    2
+  )},${b[1].toFixed(2)} ${average(b[0], c[0]).toFixed(2)},${average(
+    b[1],
+    c[1]
+  ).toFixed(2)} T`
 
-//   for (let i = 2, max = len - 1; i < max; i++) {
-//     a = points[i]
-//     b = points[i + 1]
-//     result += `${average(a[0], b[0]).toFixed(2)},${average(a[1], b[1]).toFixed(
-//       2
-//     )} `
-//   }
+  for (let i = 2, max = len - 1; i < max; i++) {
+    a = points[i]
+    b = points[i + 1]
+    result += `${average(a[0], b[0]).toFixed(2)},${average(a[1], b[1]).toFixed(
+      2
+    )} `
+  }
 
-//   if (closed) {
-//     result += 'Z'
-//   }
+  if (closed) {
+    result += 'Z'
+  }
 
-//   return result
-// }
+  return result
+}
 
 function convertPointsToArrays(points, closed =true){
   if (!points.length) return []
@@ -60,19 +60,16 @@ function convertPointsToArrays(points, closed =true){
   const commands = [['M', ...points[0]]] // Start with the 'Move' command
 
   // Iterate through each point in the stroke to build 'Q' commands
-  for (let i = 1; i < points.length - 2; i++) {
-    const p0 = points[i - 1]
-    const p1 = points[i]
-    const p2 = points[i + 1]
-    const p3 = points[i + 2]
+  for (let i = 0; i < points.length - 1; i++) {
+    const [x0, y0] = points[i]
+    const [x1, y1] = points[i + 1]
+    const controlX = x0 // Using the current point as the control point
+    const controlY = y0
+    const endX = (x0 + x1) / 2 // The midpoint between the current and next point
+    const endY = (y0 + y1) / 2
 
-    // Calculate control points based on Catmull-Rom to Cubic Bezier conversion
-    const cp1x = p1[0] + (p2[0] - p0[0]) / 6
-    const cp1y = p1[1] + (p2[1] - p0[1]) / 6
-    const cp2x = p2[0] - (p3[0] - p1[0]) / 6
-    const cp2y = p2[1] - (p3[1] - p1[1]) / 6
-
-    commands.push(['C', cp1x, cp1y, cp2x, cp2y, p2[0], p2[1]])
+    // Add a 'Q' command for the quadratic curve
+    commands.push(['Q', controlX, controlY, endX, endY])
   }
 
   // Close the path if it's not a line
@@ -148,29 +145,30 @@ function convertPointsToArrays(points, closed =true){
 export function getSvgPathArraysfromPoints(
   points: Array<Array<number>>,
   options: StrokeOptions,
-  simplifyPath : Boolean
-){
-  const stroke = getStroke(points,options)
+  simplifyPath: Boolean
+) {
+  // const stroke = getStroke(points,options)
   const pathArrays = convertPointsToArrays(
-    simplifyPath ? simplify(stroke, 0.5) : stroke
+    simplifyPath ? simplify(points, 0.5) : points
   )
   return pathArrays
 }
-export function getSvgPathFromStroke(stroke) {
-  if (!stroke.length) return ''
 
-  const d = stroke.reduce(
-    (acc, [x0, y0], i, arr) => {
-      const [x1, y1] = arr[(i + 1) % arr.length]
-      acc.push(x0, y0, (x0 + x1) / 2, (y0 + y1) / 2)
-      return acc
-    },
-    ['M', ...stroke[0], 'Q']
-  )
+// export function getSvgPathFromStroke(stroke) {
+//   if (!stroke.length) return ''
 
-  d.push('Z')
-  return d.join(' ')
-}
+//   const d = stroke.reduce(
+//     (acc, [x0, y0], i, arr) => {
+//       const [x1, y1] = arr[(i + 1) % arr.length]
+//       acc.push(x0, y0, (x0 + x1) / 2, (y0 + y1) / 2)
+//       return acc
+//     },
+//     ['M', ...stroke[0], 'Q']
+//   )
+
+//   d.push('Z')
+//   return d.join(' ')
+// }
 
 export function getSmoothPathData(
   points: Array<Array<number>>,

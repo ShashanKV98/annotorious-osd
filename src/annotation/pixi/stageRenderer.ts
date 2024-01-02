@@ -165,71 +165,71 @@ const drawShape =
     return svgElement
   }
 const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
-  // const commands = getSvgPathArraysfromPoints(freehand.geometry.points, options,true)
-  const pathData = getSmoothPathData(
-    freehand.geometry.points,
-    options,
-    true
-  )
-  const pathElement = createSVGPathElement(pathData)
-  const svg = new SVG(pathElement)
-  g.addChild(svg)
+  const commands = getSvgPathArraysfromPoints(freehand.geometry.points, options,true)
+  // const pathData = getSmoothPathData(
+  //   freehand.geometry.points,
+  //   options,
+  //   true
+  // )
+  // const pathElement = createSVGPathElement(pathData)
+  // const svg = new SVG(pathElement)
+  // g.addChild(svg)
   // const commands = parse(pathData)
   // console.log(commands)
   // let lastControlX: number, lastControlY: number;
   // let lastCommand: string = '';
-  // commands.forEach((cmd) => {
-  //   const [type, ...points] = cmd
-  //   switch (type) {
-  //     case 'M': // MoveTo
-  //       g.moveTo(points[0], points[1])
-  //       lastCommand = 'M'
-  //       break
-  //     case 'C':
-  //       g.bezierCurveTo(
-  //         points[0],
-  //         points[1],
-  //         points[2],
-  //         points[3],
-  //         points[4],
-  //         points[5]
-  //       )
-  //       lastCommand = 'C'
-  //       break
-  //     case 'Q':
-  //       g.quadraticCurveTo(points[0], points[1], points[2], points[3])
-  //       lastControlX = points[0]
-  //       lastControlY = points[1]
-  //       lastCommand = 'Q'
-  //       break
-  //     case 'T':
-  //       if (
-  //         lastControlX !== undefined &&
-  //         lastControlY !== undefined &&
-  //         (lastCommand === 'Q' || lastCommand === 'T')
-  //       ) {
-  //         const [endX, endY] = points
-  //         const newControlX = 2 * endX - lastControlX
-  //         const newControlY = 2 * endY - lastControlY
-  //         g.quadraticCurveTo(newControlX, newControlY, endX, endY)
-  //         lastControlX = newControlX
-  //         lastControlY = newControlY
-  //       } else {
-  //         // Treat it as a line to the endpoint if there's no previous control point
-  //         g.lineTo(points[0], points[1])
+  commands.forEach((cmd) => {
+    const [type, ...points] = cmd
+    switch (type) {
+      case 'M': // MoveTo
+        g.moveTo(points[0], points[1])
+        // lastCommand = 'M'
+        break
+      case 'C':
+        g.bezierCurveTo(
+          points[0],
+          points[1],
+          points[2],
+          points[3],
+          points[4],
+          points[5]
+        )
+        // lastCommand = 'C'
+        break
+      case 'Q':
+        g.quadraticCurveTo(points[0], points[1], points[2], points[3])
+        // lastControlX = points[0]
+        // lastControlY = points[1]
+        // lastCommand = 'Q'
+        break
+      // case 'T':
+      //   if (
+      //     lastControlX !== undefined &&
+      //     lastControlY !== undefined &&
+      //     (lastCommand === 'Q' || lastCommand === 'T')
+      //   ) {
+      //     const [endX, endY] = points
+      //     const newControlX = 2 * endX - lastControlX
+      //     const newControlY = 2 * endY - lastControlY
+      //     g.quadraticCurveTo(newControlX, newControlY, endX, endY)
+      //     lastControlX = newControlX
+      //     lastControlY = newControlY
+      //   } else {
+      //     // Treat it as a line to the endpoint if there's no previous control point
+      //     g.lineTo(points[0], points[1])
 
-  //       }
-  //       lastCommand = 'T'
-  //       break
-  //     case 'Z':
-  //       g.closePath()
-  //       lastCommand = 'Z'
-  //       break
-  //     default:
-  //       console.warn(`Unhandled path command: ${type}`)
-  //       break
-  //   }
-  // })
+      //   }
+      //   lastCommand = 'T'
+      //   break
+      case 'Z':
+        g.closePath()
+        // lastCommand = 'Z'
+        break
+      default:
+        console.warn(`Unhandled path command: ${type}`)
+        break
+    }
+  })
 })
 
 const drawEllipse = drawShape((ellipse: Ellipse, g: PIXI.Graphics) => {
