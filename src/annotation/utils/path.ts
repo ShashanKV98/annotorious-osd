@@ -60,25 +60,19 @@ function convertPointsToArrays(points, closed =true){
   const commands = [['M', ...points[0]]] // Start with the 'Move' command
 
   // Iterate through each point in the stroke to build 'Q' commands
-  for (let i = 0; i < points.length - 1; i++) {
-    const [x0, y0] = points[i] // current point
-    const [x1, y1] = points[i + 1] // next point
+  for (let i = 1; i < points.length - 2; i++) {
+    const p0 = points[i - 1]
+    const p1 = points[i]
+    const p2 = points[i + 1]
+    const p3 = points[i + 2]
 
-    // Calculate midpoints for control points
-    const midX_prev = i === 0 ? x0 : (points[i - 1][0] + x0) / 2
-    const midY_prev = i === 0 ? y0 : (points[i - 1][1] + y0) / 2
-    const midX_next = (x0 + x1) / 2
-    const midY_next = (y0 + y1) / 2
+    // Calculate control points based on Catmull-Rom to Cubic Bezier conversion
+    const cp1x = p1[0] + (p2[0] - p0[0]) / 6
+    const cp1y = p1[1] + (p2[1] - p0[1]) / 6
+    const cp2x = p2[0] - (p3[0] - p1[0]) / 6
+    const cp2y = p2[1] - (p3[1] - p1[1]) / 6
 
-    // Control points - one at the mid-point of the previous segment,
-    // and one at the mid-point of the current segment
-    const controlX1 = (x0 + midX_prev) / 2
-    const controlY1 = (y0 + midY_prev) / 2
-    const controlX2 = (x0 + midX_next) / 2
-    const controlY2 = (y0 + midY_next) / 2
-
-    // Add a 'C' command for the cubic curve
-    commands.push(['C', controlX1, controlY1, controlX2, controlY2, x1, y1])
+    commands.push(['C', cp1x, cp1y, cp2x, cp2y, p2[0], p2[1]])
   }
 
   // Close the path if it's not a line

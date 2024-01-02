@@ -148,7 +148,7 @@ const drawShape =
   }
 
 const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
-  const commands = getSvgPathArraysfromPoints(freehand.geometry.points, options,false)
+  const commands = getSvgPathArraysfromPoints(freehand.geometry.points, options,true)
   // const pathData = getSmoothPathData(
   //   freehand.geometry.points,
   //   options,

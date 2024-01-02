@@ -28057,9 +28057,9 @@ function G1(i, t = !0) {
   if (!i.length)
     return [];
   const e = [["M", ...i[0]]];
-  for (let r = 0; r < i.length - 1; r++) {
-    const [s, n] = i[r], [a, o] = i[r + 1], h = r === 0 ? s : (i[r - 1][0] + s) / 2, l = r === 0 ? n : (i[r - 1][1] + n) / 2, c = (s + a) / 2, u = (n + o) / 2, d = (s + h) / 2, f = (n + l) / 2, p = (s + c) / 2, m = (n + u) / 2;
-    e.push(["C", d, f, p, m, a, o]);
+  for (let r = 1; r < i.length - 2; r++) {
+    const s = i[r - 1], n = i[r], a = i[r + 1], o = i[r + 2], h = n[0] + (a[0] - s[0]) / 6, l = n[1] + (a[1] - s[1]) / 6, c = a[0] - (o[0] - n[0]) / 6, u = a[1] - (o[1] - n[1]) / 6;
+    e.push(["C", h, l, c, u, a[0], a[1]]);
   }
   return i.length > 2 && e.push(["Z"]), e;
 }
@@ -28099,7 +28099,7 @@ const po = (i) => {
     strokeWidth: n.lineWidth
   };
 }, z1 = _n((i, t) => {
-  const e = H1(i.geometry.points, U1, !1);
+  const e = H1(i.geometry.points, U1, !0);
   console.log(e);
   let r, s, n = "";
   e.forEach((a) => {
