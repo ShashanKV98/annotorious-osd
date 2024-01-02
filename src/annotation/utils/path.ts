@@ -54,28 +54,37 @@ function getSvgPathFromStroke(points, closed = true) {
   return result
 }
 
-function convertPointsToArrays(stroke, closed =true){
-  // if (!points.length) return []
+function convertPointsToArrays(points, closed =true){
+  if (!points.length) return []
 
-  // const commands = [['M', ...points[0]]] // Start with the 'Move' command
+  const commands = [['M', ...points[0]]] // Start with the 'Move' command
 
-  // // Iterate through each point in the stroke to build 'Q' commands
-  // for (let i = 0; i < points.length - 1; i++) {
-  //   const [x0, y0] = points[i]
-  //   const [x1, y1] = points[i + 1]
-  //   const controlX = x0 // Using the current point as the control point
-  //   const controlY = y0
-  //   const endX = (x0 + x1) / 2 // The midpoint between the current and next point
-  //   const endY = (y0 + y1) / 2
+  // Iterate through each point in the stroke to build 'Q' commands
+  for (let i = 0; i < points.length - 1; i++) {
+    const [x0, y0] = points[i] // current point
+    const [x1, y1] = points[i + 1] // next point
 
-  //   // Add a 'Q' command for the quadratic curve
-  //   commands.push(['Q', controlX, controlY, endX, endY])
-  // }
+    // Calculate midpoints for control points
+    const midX_prev = i === 0 ? x0 : (points[i - 1][0] + x0) / 2
+    const midY_prev = i === 0 ? y0 : (points[i - 1][1] + y0) / 2
+    const midX_next = (x0 + x1) / 2
+    const midY_next = (y0 + y1) / 2
 
-  // // Close the path if it's not a line
-  // if (points.length > 2) {
-  //   commands.push(['Z']) // Close the path
-  // }
+    // Control points - one at the mid-point of the previous segment,
+    // and one at the mid-point of the current segment
+    const controlX1 = (x0 + midX_prev) / 2
+    const controlY1 = (y0 + midY_prev) / 2
+    const controlX2 = (x0 + midX_next) / 2
+    const controlY2 = (y0 + midY_next) / 2
+
+    // Add a 'C' command for the cubic curve
+    commands.push(['C', controlX1, controlY1, controlX2, controlY2, x1, y1])
+  }
+
+  // Close the path if it's not a line
+  if (points.length > 2) {
+    commands.push(['Z']) // Close the path
+  }
   // if (!stroke.length) return []
 
   // const commands = [['M', ...stroke[0]]] // Start with the 'Move' command
@@ -97,7 +106,7 @@ function convertPointsToArrays(stroke, closed =true){
   //   commands.push(['Z']) // Close the path
   // }
 
-  // return commands
+  return commands
 
   // return commands
   // const len = points.length
