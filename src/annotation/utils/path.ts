@@ -76,28 +76,28 @@ function convertPointsToArrays(stroke, closed =true){
   // if (points.length > 2) {
   //   commands.push(['Z']) // Close the path
   // }
-  if (!stroke.length) return []
+  // if (!stroke.length) return []
 
-  const commands = [['M', ...stroke[0]]] // Start with the 'Move' command
+  // const commands = [['M', ...stroke[0]]] // Start with the 'Move' command
 
-  for (let i = 0; i < stroke.length - 1; i++) {
-    const [x0, y0] = stroke[i]
-    const [x1, y1] = stroke[i + 1]
-    const control1X = x0 // This simplistic approach uses the segment's endpoints as control points.
-    const control1Y = y0 // You'd likely want a more sophisticated approach for real applications.
-    const control2X = x1
-    const control2Y = y1
+  // for (let i = 0; i < stroke.length - 1; i++) {
+  //   const [x0, y0] = stroke[i]
+  //   const [x1, y1] = stroke[i + 1]
+  //   const control1X = x0 // This simplistic approach uses the segment's endpoints as control points.
+  //   const control1Y = y0 // You'd likely want a more sophisticated approach for real applications.
+  //   const control2X = x1
+  //   const control2Y = y1
 
-    // Add a 'C' command for the cubic curve
-    commands.push(['C', control1X, control1Y, control2X, control2Y, x1, y1])
-  }
+  //   // Add a 'C' command for the cubic curve
+  //   commands.push(['C', control1X, control1Y, control2X, control2Y, x1, y1])
+  // }
 
-  // Close the path if it's not a line
-  if (stroke.length > 2) {
-    commands.push(['Z']) // Close the path
-  }
+  // // Close the path if it's not a line
+  // if (stroke.length > 2) {
+  //   commands.push(['Z']) // Close the path
+  // }
 
-  return commands
+  // return commands
 
   // return commands
   // const len = points.length
