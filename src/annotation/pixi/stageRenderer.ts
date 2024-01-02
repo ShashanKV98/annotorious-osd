@@ -132,7 +132,7 @@ const drawShape =
       alignment: 0.5,
       native:true,
       join: PIXI.LINE_JOIN.MITER,
-      miterLimit: 0.05,
+      miterLimit: 500,
     })
     
     fn(shape, strokeGraphics)
