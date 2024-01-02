@@ -108,7 +108,7 @@ const drawShape =
     const { fillStyle, strokeStyle } = getGraphicsStyle(style)
 
     const fillGraphics = new PIXI.Graphics()
-    fillGraphics.beginFill(0xffffff,0)
+    fillGraphics.beginFill(0xffffff)
     fn(shape, fillGraphics)
     fillGraphics.endFill()
     fillGraphics.tint = fillStyle.tint
@@ -227,7 +227,7 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
       //   lastCommand = 'T'
       //   break
       case 'Z':
-        g.closePath()
+        // g.closePath()
         // lastCommand = 'Z'
         break
       default:
