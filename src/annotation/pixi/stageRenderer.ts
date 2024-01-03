@@ -108,11 +108,11 @@ const drawShape =
     const { fillStyle, strokeStyle } = getGraphicsStyle(style)
 
     const fillGraphics = new PIXI.Graphics()
-    // fillGraphics.beginFill(0xffffff)
-    // fn(shape, fillGraphics)
-    // fillGraphics.endFill()
-    // fillGraphics.tint = fillStyle.tint
-    // fillGraphics.alpha = fillStyle.alpha
+    fillGraphics.beginFill(0xffffff)
+    fn(shape, fillGraphics)
+    fillGraphics.endFill()
+    fillGraphics.tint = fillStyle.tint
+    fillGraphics.alpha = fillStyle.alpha
     
     container.addChild(fillGraphics)
 
@@ -194,19 +194,25 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
   // if (g.currentPath && g.currentPath.shape) {
   //   g.currentPath.shape.closed = false // Ensure the path is open
   // }
-  commands.forEach((cmd) => {
+  let firstPoint = null
+  commands.forEach((cmd,index) => {
     const [type, ...points] = cmd
     switch (type) {
       case 'M': // MoveTo
         g.moveTo(points[0], points[1])
         // lastCommand = 'M'
+        if (index === 0) {
+          // Begin filling only once at the start of the first 'M' command
+          g.beginFill(0x0000ff, 1)
+          firstPoint = points // Remember the first point to close the path later
+        }
         break
       case 'L': // MoveTo
-        g.beginFill(0x0000ff, 1)
+        // g.beginFill(0x0000ff, 1)
         g.lineTo(points[0], points[1])
-        g.closePath()
-        g.endFill()
-        g.moveTo(points[0], points[1])
+        // g.closePath()
+        // g.endFill()
+        // g.moveTo(points[0], points[1])
         // lastCommand = 'M'
         break
 
@@ -259,6 +265,9 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
         break
     }
   })
+  if (firstPoint) {
+    g.lineTo(firstPoint[0], firstPoint[1]) // Optional: Explicitly close the path if needed
+  }
   g.endFill()
 })
 
