@@ -25923,7 +25923,7 @@ function Cv(r) {
   let t, e, i, s, n, o, a, h, l, c, u, f, d, p, m, g, y, v, _, x, E, C, w, I, S, M, F, R, T, A, P, X, D;
   return {
     c() {
-      t = rt("defs"), e = rt("marker"), i = rt("path"), l = It(), c = rt("line"), g = It(), y = rt("line"), C = It(), w = rt("circle"), F = It(), R = rt("circle"), b(i, "d", "M 0 0 L 10 5 L 0 10 z"), b(e, "class", "arrow"), b(e, "viewBox", s = `0 0 ${/*handleSize*/
+      t = rt("defs"), e = rt("marker"), i = rt("path"), l = It(), c = rt("line"), g = It(), y = rt("line"), C = It(), w = rt("circle"), F = It(), R = rt("circle"), b(i, "d", "M 0 0 L 10 5 L 0 10 z"), b(e, "id", "arrow"), b(e, "viewBox", s = `0 0 ${/*handleSize*/
       r[3] / 2} ${/*handleSize*/
       r[3] / 2}`), b(e, "refX", n = `${/*handleSize*/
       r[3] / 2}`), b(e, "refY", o = `${/*handleSize*/
@@ -25934,12 +25934,12 @@ function Cv(r) {
       r[4].x1), b(c, "y1", d = /*geom*/
       r[4].y1), b(c, "x2", p = /*geom*/
       r[4].x2), b(c, "y2", m = /*geom*/
-      r[4].y2), b(c, "marker-end", "url(.arrow)"), b(y, "class", "a9s-inner a9s-shape-handle"), b(
+      r[4].y2), b(c, "marker-end", "url(#arrow)"), b(y, "class", "a9s-inner a9s-shape-handle"), b(
         y,
         "style",
         /*computedStyle*/
         r[1]
-      ), b(y, "x1", v = /*geom*/
+      ), b(y, "marker-end", "url(#arrow)"), b(y, "x1", v = /*geom*/
       r[4].x1), b(y, "y1", _ = /*geom*/
       r[4].y1), b(y, "x2", x = /*geom*/
       r[4].x2), b(y, "y2", E = /*geom*/
