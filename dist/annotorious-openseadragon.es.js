@@ -26427,10 +26427,10 @@ const Zo = (r) => {
     const [s, ...n] = i;
     switch (s) {
       case "M":
-        t.moveTo(n[0], n[1]);
+        t.beginFill(255, 1), t.moveTo(n[0], n[1]);
         break;
       case "L":
-        t.beginFill(255, 1), t.lineTo(n[0], n[1]), t.closePath(), t.endFill(), t.moveTo(n[0], n[1]);
+        t.beginFill(0, 1), t.lineTo(n[0], n[1]), t.moveTo(n[0], n[1]), t.endFill();
         break;
       case "C":
         t.bezierCurveTo(
@@ -26446,13 +26446,13 @@ const Zo = (r) => {
         t.quadraticCurveTo(n[0], n[1], n[2], n[3]), t.moveTo(n[0], n[1]);
         break;
       case "Z":
-        t.closePath();
+        t.closePath(), t.endFill();
         break;
       default:
         console.warn(`Unhandled path command: ${s}`);
         break;
     }
-  }), t.endFill();
+  });
 }), Jv = sn((r, t) => {
   const { cx: e, cy: i, rx: s, ry: n } = r.geometry;
   t.drawEllipse(e, i, s, n);

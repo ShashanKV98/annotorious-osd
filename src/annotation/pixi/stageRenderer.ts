@@ -199,15 +199,17 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
     const [type, ...points] = cmd
     switch (type) {
       case 'M': // MoveTo
+      g.beginFill(0x0000ff, 1)
         g.moveTo(points[0], points[1])
         // lastCommand = 'M'
         break
       case 'L': // MoveTo
-        g.beginFill(0x0000ff, 1)
+        g.beginFill(0x000000, 1)
         g.lineTo(points[0], points[1])
-        g.closePath()
-        g.endFill()
+        // g.closePath()
+        
         g.moveTo(points[0], points[1])
+        g.endFill()
         // lastCommand = 'M'
         break
 
@@ -254,13 +256,14 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
       case 'Z':
         g.closePath()
         // lastCommand = 'Z'
+        g.endFill()
         break
       default:
         console.warn(`Unhandled path command: ${type}`)
         break
     }
   })
-  g.endFill()
+  
 })
 
 const drawEllipse = drawShape((ellipse: Ellipse, g: PIXI.Graphics) => {
