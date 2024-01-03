@@ -26376,9 +26376,9 @@ function Yv(r, t = !0) {
   if (!r.length)
     return [];
   const e = [["M", ...r[0]]];
-  for (let i = 0; i < r.length - 1; i++) {
-    const [s, n] = r[i], [o, a] = r[i + 1], h = s, l = n, c = (s + o) / 2, u = (n + a) / 2;
-    e.push(["Q", h, l, c, u]);
+  for (let i = 0; i < r.length; i++) {
+    const [s, n] = r[i];
+    e.push(["L", s, n]);
   }
   return r.length > 2 && e.push(["Z"]), e;
 }
