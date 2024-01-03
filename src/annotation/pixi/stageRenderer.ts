@@ -108,11 +108,11 @@ const drawShape =
     const { fillStyle, strokeStyle } = getGraphicsStyle(style)
 
     const fillGraphics = new PIXI.Graphics()
-    // fillGraphics.beginFill(0xffffff)
-    // fn(shape, fillGraphics)
-    // fillGraphics.endFill()
-    // fillGraphics.tint = fillStyle.tint
-    // fillGraphics.alpha = fillStyle.alpha
+    fillGraphics.beginFill(0xffffff)
+    fn(shape, fillGraphics)
+    fillGraphics.endFill()
+    fillGraphics.tint = fillStyle.tint
+    fillGraphics.alpha = fillStyle.alpha
     
     container.addChild(fillGraphics)
 
