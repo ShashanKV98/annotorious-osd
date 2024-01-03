@@ -188,8 +188,8 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
   console.log(g.currentPath)
   console.log(g)
   console.log(commands)
-  g.beginFill(0x00ff00, 1)
-  g.lineStyle(7, 0x0000ff, 1)
+  g.beginFill(0x0000ff, 1)
+  g.lineStyle(1, 0x0000ff, 1)
   
   // if (g.currentPath && g.currentPath.shape) {
   //   g.currentPath.shape.closed = false // Ensure the path is open
@@ -216,6 +216,7 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
           points[4],
           points[5]
         )
+        g.moveTo(points[0], points[1])
         // lastCommand = 'C'
         break
       case 'Q':
