@@ -216,12 +216,13 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
           points[4],
           points[5]
         )
-        g.moveTo(points[0], points[1])
+        
         // lastCommand = 'C'
         break
       case 'Q':
         // g.beginFill(0xff0000)
         g.quadraticCurveTo(points[0], points[1], points[2], points[3])
+        g.moveTo(points[0], points[1])
         // g.endFill()
         // lastControlX = points[0]
         // lastControlY = points[1]

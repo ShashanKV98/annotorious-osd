@@ -26440,10 +26440,10 @@ const Zo = (r) => {
           n[3],
           n[4],
           n[5]
-        ), t.moveTo(n[0], n[1]);
+        );
         break;
       case "Q":
-        t.quadraticCurveTo(n[0], n[1], n[2], n[3]);
+        t.quadraticCurveTo(n[0], n[1], n[2], n[3]), t.moveTo(n[0], n[1]);
         break;
       case "Z":
         t.closePath();
