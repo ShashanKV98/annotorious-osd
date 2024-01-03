@@ -189,6 +189,7 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
   console.log(g)
   console.log(commands)
   g.lineStyle(2, 0xff0000, 1)
+  g.beginFill(0x00ff00, 1)
   // if (g.currentPath && g.currentPath.shape) {
   //   g.currentPath.shape.closed = false // Ensure the path is open
   // }
@@ -252,6 +253,7 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
         break
     }
   })
+  g.endFill()
 })
 
 const drawEllipse = drawShape((ellipse: Ellipse, g: PIXI.Graphics) => {

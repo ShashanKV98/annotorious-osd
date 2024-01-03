@@ -26423,7 +26423,7 @@ const Zo = (r) => {
     $v,
     !1
   );
-  console.log(t.currentPath), console.log(t), console.log(e), t.lineStyle(2, 16711680, 1), e.forEach((i) => {
+  console.log(t.currentPath), console.log(t), console.log(e), t.lineStyle(2, 16711680, 1), t.beginFill(65280, 1), e.forEach((i) => {
     const [s, ...n] = i;
     switch (s) {
       case "M":
@@ -26452,7 +26452,7 @@ const Zo = (r) => {
         console.warn(`Unhandled path command: ${s}`);
         break;
     }
-  });
+  }), t.endFill();
 }), Jv = sn((r, t) => {
   const { cx: e, cy: i, rx: s, ry: n } = r.geometry;
   t.drawEllipse(e, i, s, n);
