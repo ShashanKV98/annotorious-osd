@@ -198,7 +198,9 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
         // lastCommand = 'M'
         break
       case 'L': // MoveTo
+         g.beginFill(0xff0000)
         g.lineTo(points[0], points[1])
+        g.endFill()
         g.moveTo(points[0], points[1])
         // lastCommand = 'M'
         break
@@ -215,9 +217,9 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
         // lastCommand = 'C'
         break
       case 'Q':
-        g.beginFill(0xff0000)
+        // g.beginFill(0xff0000)
         g.quadraticCurveTo(points[0], points[1], points[2], points[3])
-        g.endFill()
+        // g.endFill()
         // lastControlX = points[0]
         // lastControlY = points[1]
         // lastCommand = 'Q'

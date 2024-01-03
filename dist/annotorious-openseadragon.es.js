@@ -26430,7 +26430,7 @@ const Zo = (r) => {
         t.moveTo(n[0], n[1]);
         break;
       case "L":
-        t.lineTo(n[0], n[1]), t.moveTo(n[0], n[1]);
+        t.beginFill(16711680), t.lineTo(n[0], n[1]), t.endFill(), t.moveTo(n[0], n[1]);
         break;
       case "C":
         t.bezierCurveTo(
@@ -26443,7 +26443,7 @@ const Zo = (r) => {
         );
         break;
       case "Q":
-        t.beginFill(16711680), t.quadraticCurveTo(n[0], n[1], n[2], n[3]), t.endFill();
+        t.quadraticCurveTo(n[0], n[1], n[2], n[3]);
         break;
       case "Z":
         break;
