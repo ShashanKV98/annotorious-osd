@@ -26423,14 +26423,14 @@ const Zo = (r) => {
     $v,
     !1
   );
-  console.log(t.currentPath), console.log(t), console.log(e), t.lineStyle(1, 255, 1), e.forEach((i) => {
+  console.log(t.currentPath), console.log(t), console.log(e), t.beginFill(255, 1), t.lineStyle(1, 255, 1), e.forEach((i) => {
     const [s, ...n] = i;
     switch (s) {
       case "M":
         t.moveTo(n[0], n[1]);
         break;
       case "L":
-        t.beginFill(255, 1), t.lineTo(n[0], n[1]), t.moveTo(n[0], n[1]), t.endFill();
+        t.lineTo(n[0], n[1]), t.moveTo(n[0], n[1]);
         break;
       case "C":
         t.bezierCurveTo(
@@ -26452,7 +26452,7 @@ const Zo = (r) => {
         console.warn(`Unhandled path command: ${s}`);
         break;
     }
-  });
+  }), t.endFill();
 }), Jv = sn((r, t) => {
   const { cx: e, cy: i, rx: s, ry: n } = r.geometry;
   t.drawEllipse(e, i, s, n);
