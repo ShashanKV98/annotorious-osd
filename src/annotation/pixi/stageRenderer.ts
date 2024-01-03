@@ -195,7 +195,7 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
   // Assuming 'points' is an array of points representing the centerline of the stroke
   // and 'width' is the desired width of the stroke
   for (let i = 0; i < stroke.length - 1; i++) {
-    drawSegment(stroke[i], stroke[i + 1], 10)
+    drawSegment(stroke[i], stroke[i + 1], 2)
   }
   // const commands = getSvgPathArraysfromPoints(
   //   freehand.geometry.points,

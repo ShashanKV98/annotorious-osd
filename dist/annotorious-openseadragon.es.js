@@ -26373,7 +26373,7 @@ const Ko = (r) => {
     t.beginFill(255, 1), t.moveTo(s[0] + l[0], s[1] + l[1]), t.lineTo(n[0] + l[0], n[1] + l[1]), t.lineTo(n[0] + c[0], n[1] + c[1]), t.lineTo(s[0] + c[0], s[1] + c[1]), t.lineTo(s[0] + l[0], s[1] + l[1]), t.endFill();
   }
   for (let s = 0; s < e.length - 1; s++)
-    i(e[s], e[s + 1], 10);
+    i(e[s], e[s + 1], 2);
 }), Wv = sn((r, t) => {
   const { cx: e, cy: i, rx: s, ry: n } = r.geometry;
   t.drawEllipse(e, i, s, n);
