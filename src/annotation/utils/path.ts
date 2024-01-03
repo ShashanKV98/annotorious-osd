@@ -73,9 +73,9 @@ function convertPointsToArrays(points, closed =true){
   }
 
   // Close the path if it's not a line
-  if (points.length > 2) {
-    commands.push(['Z']) // Close the path
-  }
+  // if (points.length > 2) {
+  //   commands.push(['Z']) // Close the path
+  // }
   // if (!stroke.length) return []
 
   // const commands = [['M', ...stroke[0]]] // Start with the 'Move' command

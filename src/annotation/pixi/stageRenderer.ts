@@ -108,11 +108,11 @@ const drawShape =
     const { fillStyle, strokeStyle } = getGraphicsStyle(style)
 
     const fillGraphics = new PIXI.Graphics()
-    fillGraphics.beginFill(0xffffff)
-    fn(shape, fillGraphics)
-    fillGraphics.endFill()
-    fillGraphics.tint = fillStyle.tint
-    fillGraphics.alpha = fillStyle.alpha
+    // fillGraphics.beginFill(0xffffff)
+    // fn(shape, fillGraphics)
+    // fillGraphics.endFill()
+    // fillGraphics.tint = fillStyle.tint
+    // fillGraphics.alpha = fillStyle.alpha
     
     container.addChild(fillGraphics)
 
@@ -184,7 +184,9 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
   // let lastCommand: string = '';
   // Directly access and modify the currentPath's closed property
   console.log(g.currentPath)
-  
+  console.log(g)
+  console.log(commands)
+
   // if (g.currentPath && g.currentPath.shape) {
   //   g.currentPath.shape.closed = false // Ensure the path is open
   // }
@@ -212,7 +214,9 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
         // lastCommand = 'C'
         break
       case 'Q':
+        g.beginFill(0xff0000)
         g.quadraticCurveTo(points[0], points[1], points[2], points[3])
+        g.endFill()
         // lastControlX = points[0]
         // lastControlY = points[1]
         // lastCommand = 'Q'
@@ -237,7 +241,7 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
       //   lastCommand = 'T'
       //   break
       case 'Z':
-        // g.closePath()
+        g.closePath()
         // lastCommand = 'Z'
         break
       default:
