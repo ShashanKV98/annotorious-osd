@@ -16,6 +16,7 @@ import type {
   Rectangle,
   Shape,
   Freehand,
+  Line
 } from '@annotorious/annotorious/src'
 import parse from 'parse-svg-path'
 import { getSvgPathArraysfromPoints,getSmoothPathData, options } from '../utils/path'
@@ -287,6 +288,11 @@ const drawRectangle = drawShape((rectangle: Rectangle, g: PIXI.Graphics) => {
   g.drawRoundedRect(x, y, w, h, 4)
 })
 
+const drawLine= drawShape((line: Line, g: PIXI.Graphics) => {
+  const { x1, y1, x2, y2 } = line.geometry
+  g.moveTo(x1, y1)
+  g.lineTo(x2, y2)
+})
 const redrawStage =
   (
     viewer: OpenSeadragon.Viewer,
@@ -412,6 +418,8 @@ export const createStage = (
       rendered = drawFreehand(graphics, selector as Freehand, s)
     } else if (selector.type === ShapeType.ELLIPSE) {
       rendered = drawEllipse(graphics, selector as Ellipse, s)
+    } else if (selector.type === ShapeType.LINE) {
+      rendered = drawLine(graphics, selector as Line, s)
     } else {
       console.warn(`Unsupported shape type: ${selector.type}`)
     }
