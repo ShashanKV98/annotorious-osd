@@ -26418,7 +26418,12 @@ const Zo = (r) => {
     strokeWidth: n.lineWidth
   };
 }, Qv = sn((r, t) => {
-  qv(r.geometry.points, $v, !1).forEach((i) => {
+  const e = qv(
+    r.geometry.points,
+    $v,
+    !1
+  );
+  console.log(t.currentPath), e.forEach((i) => {
     const [s, ...n] = i;
     switch (s) {
       case "M":

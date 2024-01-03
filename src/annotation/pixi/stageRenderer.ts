@@ -165,7 +165,11 @@ const drawShape =
     return svgElement
   }
 const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
-  const commands = getSvgPathArraysfromPoints(freehand.geometry.points, options,false)
+  const commands = getSvgPathArraysfromPoints(
+    freehand.geometry.points,
+    options,
+    false
+  )
   // const pathData = getSmoothPathData(
   //   freehand.geometry.points,
   //   options,
@@ -178,6 +182,12 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
   // console.log(commands)
   // let lastControlX: number, lastControlY: number;
   // let lastCommand: string = '';
+  // Directly access and modify the currentPath's closed property
+  console.log(g.currentPath)
+  
+  // if (g.currentPath && g.currentPath.shape) {
+  //   g.currentPath.shape.closed = false // Ensure the path is open
+  // }
   commands.forEach((cmd) => {
     const [type, ...points] = cmd
     switch (type) {
