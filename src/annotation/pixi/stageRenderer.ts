@@ -128,7 +128,7 @@ const drawShape =
     // strokeGraphics.beginFill(0xffffff)
     strokeGraphics.lineStyle({
       width: 4 * strokeStyle.lineWidth / lastScale,
-      color: 0xffffff,
+      color: 0x0000ff,
       alpha: 1,
       alignment: 1,
       native:true,
@@ -167,41 +167,12 @@ const drawShape =
     return svgElement
   }
 const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
-  const stroke = getStroke(freehand.geometry.points,options)
-  function drawSegment(start, end, width) {
-    const halfWidth = width / 2
-    const angle = Math.atan2(end[1] - start[1], end[0] - start[0])
-
-    // Calculate the corners of the rectangle
-    const offset1 = [Math.sin(angle) * halfWidth, -Math.cos(angle) * halfWidth]
-    const offset2 = [-Math.sin(angle) * halfWidth, Math.cos(angle) * halfWidth]
-
-    // Start a new shape for this segment
-    g.beginFill(0x0000ff, 1) // Start filling with the desired color
-
-    // Move to the first corner
-    g.moveTo(start[0] + offset1[0], start[1] + offset1[1])
-
-    // Draw the four sides of the rectangle
-    g.lineTo(end[0] + offset1[0], end[1] + offset1[1])
-    g.lineTo(end[0] + offset2[0], end[1] + offset2[1])
-    g.lineTo(start[0] + offset2[0], start[1] + offset2[1])
-
-    // Close and fill the shape
-    g.lineTo(start[0] + offset1[0], start[1] + offset1[1])
-    g.endFill()
-  }
-
-  // Assuming 'points' is an array of points representing the centerline of the stroke
-  // and 'width' is the desired width of the stroke
-  for (let i = 0; i < stroke.length - 1; i++) {
-    drawSegment(stroke[i], stroke[i + 1], 2)
-  }
-  // const commands = getSvgPathArraysfromPoints(
-  //   freehand.geometry.points,
-  //   options,
-  //   false
-  // )
+  
+  const commands = getSvgPathArraysfromPoints(
+    freehand.geometry.points,
+    options,
+    false
+  )
   // const pathData = getSmoothPathData(
   //   freehand.geometry.points,
   //   options,
@@ -225,74 +196,74 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
   // //   g.currentPath.shape.closed = false // Ensure the path is open
   // // }
   
-  // commands.forEach((cmd) => {
-  //   const [type, ...points] = cmd
-  //   switch (type) {
-  //     case 'M': // MoveTo
-  //     // g.beginFill(0x0000ff, 1)
-  //       g.moveTo(points[0], points[1])
-  //       // lastCommand = 'M'
-  //       break
-  //     case 'L': // MoveTo
-  //       // g.beginFill(0x0000ff, 1)
-  //       g.lineTo(points[0], points[1])
-  //       // g.closePath()
+  commands.forEach((cmd) => {
+    const [type, ...points] = cmd
+    switch (type) {
+      case 'M': // MoveTo
+      // g.beginFill(0x0000ff, 1)
+        g.moveTo(points[0], points[1])
+        // lastCommand = 'M'
+        break
+      case 'L': // MoveTo
+        g.beginFill(0x0000ff, 1)
+        g.lineTo(points[0], points[1])
+        // g.closePath()
         
-  //       g.moveTo(points[0], points[1])
+        g.moveTo(points[0], points[1])
         
-  //       // lastCommand = 'M'
-  //       break
+        // lastCommand = 'M'
+        break
 
-  //     case 'C':
-  //       g.bezierCurveTo(
-  //         points[0],
-  //         points[1],
-  //         points[2],
-  //         points[3],
-  //         points[4],
-  //         points[5]
-  //       )
+      case 'C':
+        g.bezierCurveTo(
+          points[0],
+          points[1],
+          points[2],
+          points[3],
+          points[4],
+          points[5]
+        )
         
-  //       // lastCommand = 'C'
-  //       break
-  //     case 'Q':
-  //       // g.beginFill(0xff0000)
-  //       g.quadraticCurveTo(points[0], points[1], points[2], points[3])
-  //       g.moveTo(points[0], points[1])
-  //       // g.endFill()
-  //       // lastControlX = points[0]
-  //       // lastControlY = points[1]
-  //       // lastCommand = 'Q'
-  //       break
-  //     // case 'T':
-  //     //   if (
-  //     //     lastControlX !== undefined &&
-  //     //     lastControlY !== undefined &&
-  //     //     (lastCommand === 'Q' || lastCommand === 'T')
-  //     //   ) {
-  //     //     const [endX, endY] = points
-  //     //     const newControlX = 2 * endX - lastControlX
-  //     //     const newControlY = 2 * endY - lastControlY
-  //     //     g.quadraticCurveTo(newControlX, newControlY, endX, endY)
-  //     //     lastControlX = newControlX
-  //     //     lastControlY = newControlY
-  //     //   } else {
-  //     //     // Treat it as a line to the endpoint if there's no previous control point
-  //     //     g.lineTo(points[0], points[1])
+        // lastCommand = 'C'
+        break
+      case 'Q':
+        // g.beginFill(0xff0000)
+        g.quadraticCurveTo(points[0], points[1], points[2], points[3])
+        g.moveTo(points[0], points[1])
+        // g.endFill()
+        // lastControlX = points[0]
+        // lastControlY = points[1]
+        // lastCommand = 'Q'
+        break
+      // case 'T':
+      //   if (
+      //     lastControlX !== undefined &&
+      //     lastControlY !== undefined &&
+      //     (lastCommand === 'Q' || lastCommand === 'T')
+      //   ) {
+      //     const [endX, endY] = points
+      //     const newControlX = 2 * endX - lastControlX
+      //     const newControlY = 2 * endY - lastControlY
+      //     g.quadraticCurveTo(newControlX, newControlY, endX, endY)
+      //     lastControlX = newControlX
+      //     lastControlY = newControlY
+      //   } else {
+      //     // Treat it as a line to the endpoint if there's no previous control point
+      //     g.lineTo(points[0], points[1])
 
-  //     //   }
-  //     //   lastCommand = 'T'
-  //     //   break
-  //     case 'Z':
-  //       g.closePath()
-  //       // lastCommand = 'Z'
-  //       // g.endFill()
-  //       break
-  //     default:
-  //       console.warn(`Unhandled path command: ${type}`)
-  //       break
-  //   }
-  // })
+      //   }
+      //   lastCommand = 'T'
+      //   break
+      case 'Z':
+        g.closePath()
+        // lastCommand = 'Z'
+        // g.endFill()
+        break
+      default:
+        console.warn(`Unhandled path command: ${type}`)
+        break
+    }
+  })
   // g.endFill()
   
 })
