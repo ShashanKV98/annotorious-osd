@@ -26423,14 +26423,14 @@ const Zo = (r) => {
     $v,
     !1
   );
-  console.log(t.currentPath), console.log(t), console.log(e), t.beginFill(255, 1), t.lineStyle(1, 255, 1), e.forEach((i) => {
+  console.log(t.currentPath), console.log(t), console.log(e), t.lineStyle(1, 255, 1), e.forEach((i) => {
     const [s, ...n] = i;
     switch (s) {
       case "M":
         t.beginFill(255, 1), t.moveTo(n[0], n[1]);
         break;
       case "L":
-        t.beginFill(0, 1), t.lineTo(n[0], n[1]), t.moveTo(n[0], n[1]), t.endFill();
+        t.beginFill(255, 1), t.lineTo(n[0], n[1]), t.moveTo(n[0], n[1]), t.endFill();
         break;
       case "C":
         t.bezierCurveTo(
