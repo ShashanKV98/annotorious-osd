@@ -109,7 +109,7 @@ const drawShape =
     const { fillStyle, strokeStyle } = getGraphicsStyle(style)
 
     const fillGraphics = new PIXI.Graphics()
-    fillGraphics.beginFill(0xffffff,1)
+    fillGraphics.beginFill(0xffffff,0)
     fn(shape, fillGraphics)
     fillGraphics.endFill()
     fillGraphics.tint = fillStyle.tint
@@ -128,8 +128,8 @@ const drawShape =
     // )
     // strokeGraphics.beginFill(0xffffff)
     strokeGraphics.lineStyle({
-      width: 4 * strokeStyle.lineWidth / lastScale,
-      color: 0xffffff,
+      width: 2 * strokeStyle.lineWidth / lastScale,
+      color: 0xffff00,
       alpha: 1,
       alignment: 1,
       native:true,
