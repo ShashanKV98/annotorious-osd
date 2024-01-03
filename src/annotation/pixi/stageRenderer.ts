@@ -108,7 +108,7 @@ const drawShape =
     const { fillStyle, strokeStyle } = getGraphicsStyle(style)
 
     const fillGraphics = new PIXI.Graphics()
-    fillGraphics.beginFill(0xffffff)
+    fillGraphics.beginFill(0xffff00,1)
     fn(shape, fillGraphics)
     fillGraphics.endFill()
     fillGraphics.tint = fillStyle.tint

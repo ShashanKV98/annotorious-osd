@@ -26402,7 +26402,7 @@ const Zo = (r) => {
   return { fillStyle: t, strokeStyle: e };
 }, sn = (r) => (t, e, i) => {
   const { fillStyle: s, strokeStyle: n } = Zo(i), o = new Mi();
-  o.beginFill(16777215), r(e, o), o.endFill(), o.tint = s.tint, o.alpha = s.alpha, t.addChild(o);
+  o.beginFill(16776960, 1), r(e, o), o.endFill(), o.tint = s.tint, o.alpha = s.alpha, t.addChild(o);
   const a = new Mi();
   return a.lineStyle({
     width: 4 * n.lineWidth / Ko,
