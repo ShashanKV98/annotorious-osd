@@ -194,25 +194,20 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
   // if (g.currentPath && g.currentPath.shape) {
   //   g.currentPath.shape.closed = false // Ensure the path is open
   // }
-  let firstPoint = null
-  commands.forEach((cmd,index) => {
+  
+  commands.forEach((cmd) => {
     const [type, ...points] = cmd
     switch (type) {
       case 'M': // MoveTo
         g.moveTo(points[0], points[1])
         // lastCommand = 'M'
-        if (index === 0) {
-          // Begin filling only once at the start of the first 'M' command
-          g.beginFill(0x0000ff, 1)
-          firstPoint = points // Remember the first point to close the path later
-        }
         break
       case 'L': // MoveTo
-        // g.beginFill(0x0000ff, 1)
+        g.beginFill(0x0000ff, 1)
         g.lineTo(points[0], points[1])
-        // g.closePath()
-        // g.endFill()
-        // g.moveTo(points[0], points[1])
+        g.closePath()
+        g.endFill()
+        g.moveTo(points[0], points[1])
         // lastCommand = 'M'
         break
 
@@ -265,9 +260,6 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
         break
     }
   })
-  if (firstPoint) {
-    g.lineTo(firstPoint[0], firstPoint[1]) // Optional: Explicitly close the path if needed
-  }
   g.endFill()
 })
 

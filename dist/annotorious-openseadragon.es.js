@@ -26423,38 +26423,36 @@ const Zo = (r) => {
     $v,
     !1
   );
-  console.log(t.currentPath), console.log(t), console.log(e), t.beginFill(255, 1), t.lineStyle(1, 255, 1);
-  let i = null;
-  e.forEach((s, n) => {
-    const [o, ...a] = s;
-    switch (o) {
+  console.log(t.currentPath), console.log(t), console.log(e), t.beginFill(255, 1), t.lineStyle(1, 255, 1), e.forEach((i) => {
+    const [s, ...n] = i;
+    switch (s) {
       case "M":
-        t.moveTo(a[0], a[1]), n === 0 && (t.beginFill(255, 1), i = a);
+        t.moveTo(n[0], n[1]);
         break;
       case "L":
-        t.lineTo(a[0], a[1]);
+        t.beginFill(255, 1), t.lineTo(n[0], n[1]), t.closePath(), t.endFill(), t.moveTo(n[0], n[1]);
         break;
       case "C":
         t.bezierCurveTo(
-          a[0],
-          a[1],
-          a[2],
-          a[3],
-          a[4],
-          a[5]
+          n[0],
+          n[1],
+          n[2],
+          n[3],
+          n[4],
+          n[5]
         );
         break;
       case "Q":
-        t.quadraticCurveTo(a[0], a[1], a[2], a[3]), t.moveTo(a[0], a[1]);
+        t.quadraticCurveTo(n[0], n[1], n[2], n[3]), t.moveTo(n[0], n[1]);
         break;
       case "Z":
         t.closePath();
         break;
       default:
-        console.warn(`Unhandled path command: ${o}`);
+        console.warn(`Unhandled path command: ${s}`);
         break;
     }
-  }), i && t.lineTo(i[0], i[1]), t.endFill();
+  }), t.endFill();
 }), Jv = sn((r, t) => {
   const { cx: e, cy: i, rx: s, ry: n } = r.geometry;
   t.drawEllipse(e, i, s, n);
