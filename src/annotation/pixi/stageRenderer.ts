@@ -19,7 +19,7 @@ import type {
 } from '@annotorious/annotorious/src'
 import parse from 'parse-svg-path'
 import { getSvgPathArraysfromPoints,getSmoothPathData, options } from '../utils/path'
-
+import { getStroke, type StrokeOptions } from 'perfect-freehand'
 const DEFAULT_FILL = 0x1a73e8
 const DEFAULT_ALPHA = 0.25
 
@@ -167,11 +167,29 @@ const drawShape =
     return svgElement
   }
 const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
-  const commands = getSvgPathArraysfromPoints(
-    freehand.geometry.points,
-    options,
-    false
-  )
+  const stroke = getStroke(freehand.geometry.points,options)
+  g.lineStyle(2, 0xff0000, 1) // Set the line style (optional, for the outline)
+  g.beginFill(0x0000ff, 1) 
+  g.moveTo(stroke[0][0], stroke[0][1])
+
+  // Draw the stroke outline
+  stroke.forEach((point, index) => {
+    if (index > 0) {
+      // Skip the first point since we've already moved there
+      g.lineTo(point[0], point[1])
+    }
+  })
+
+  // Optionally close the path if it's not already a closed loop
+  g.lineTo(stroke[0][0], stroke[0][1])
+
+  // Apply the fill to the entire stroke shape
+  g.endFill()
+  // const commands = getSvgPathArraysfromPoints(
+  //   freehand.geometry.points,
+  //   options,
+  //   false
+  // )
   // const pathData = getSmoothPathData(
   //   freehand.geometry.points,
   //   options,
@@ -185,85 +203,85 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
   // let lastControlX: number, lastControlY: number;
   // let lastCommand: string = '';
   // Directly access and modify the currentPath's closed property
-  console.log(g.currentPath)
-  console.log(g)
-  console.log(commands)
-  g.beginFill(0x0000ff, 1)
-  g.lineStyle(1, 0x0000ff, 1)
+  // console.log(g.currentPath)
+  // console.log(g)
+  // console.log(commands)
+  // g.beginFill(0x0000ff, 1)
+  // g.lineStyle(1, 0x0000ff, 1)
   
-  // if (g.currentPath && g.currentPath.shape) {
-  //   g.currentPath.shape.closed = false // Ensure the path is open
-  // }
+  // // if (g.currentPath && g.currentPath.shape) {
+  // //   g.currentPath.shape.closed = false // Ensure the path is open
+  // // }
   
-  commands.forEach((cmd) => {
-    const [type, ...points] = cmd
-    switch (type) {
-      case 'M': // MoveTo
-      // g.beginFill(0x0000ff, 1)
-        g.moveTo(points[0], points[1])
-        // lastCommand = 'M'
-        break
-      case 'L': // MoveTo
-        // g.beginFill(0x0000ff, 1)
-        g.lineTo(points[0], points[1])
-        // g.closePath()
+  // commands.forEach((cmd) => {
+  //   const [type, ...points] = cmd
+  //   switch (type) {
+  //     case 'M': // MoveTo
+  //     // g.beginFill(0x0000ff, 1)
+  //       g.moveTo(points[0], points[1])
+  //       // lastCommand = 'M'
+  //       break
+  //     case 'L': // MoveTo
+  //       // g.beginFill(0x0000ff, 1)
+  //       g.lineTo(points[0], points[1])
+  //       // g.closePath()
         
-        g.moveTo(points[0], points[1])
+  //       g.moveTo(points[0], points[1])
         
-        // lastCommand = 'M'
-        break
+  //       // lastCommand = 'M'
+  //       break
 
-      case 'C':
-        g.bezierCurveTo(
-          points[0],
-          points[1],
-          points[2],
-          points[3],
-          points[4],
-          points[5]
-        )
+  //     case 'C':
+  //       g.bezierCurveTo(
+  //         points[0],
+  //         points[1],
+  //         points[2],
+  //         points[3],
+  //         points[4],
+  //         points[5]
+  //       )
         
-        // lastCommand = 'C'
-        break
-      case 'Q':
-        // g.beginFill(0xff0000)
-        g.quadraticCurveTo(points[0], points[1], points[2], points[3])
-        g.moveTo(points[0], points[1])
-        // g.endFill()
-        // lastControlX = points[0]
-        // lastControlY = points[1]
-        // lastCommand = 'Q'
-        break
-      // case 'T':
-      //   if (
-      //     lastControlX !== undefined &&
-      //     lastControlY !== undefined &&
-      //     (lastCommand === 'Q' || lastCommand === 'T')
-      //   ) {
-      //     const [endX, endY] = points
-      //     const newControlX = 2 * endX - lastControlX
-      //     const newControlY = 2 * endY - lastControlY
-      //     g.quadraticCurveTo(newControlX, newControlY, endX, endY)
-      //     lastControlX = newControlX
-      //     lastControlY = newControlY
-      //   } else {
-      //     // Treat it as a line to the endpoint if there's no previous control point
-      //     g.lineTo(points[0], points[1])
+  //       // lastCommand = 'C'
+  //       break
+  //     case 'Q':
+  //       // g.beginFill(0xff0000)
+  //       g.quadraticCurveTo(points[0], points[1], points[2], points[3])
+  //       g.moveTo(points[0], points[1])
+  //       // g.endFill()
+  //       // lastControlX = points[0]
+  //       // lastControlY = points[1]
+  //       // lastCommand = 'Q'
+  //       break
+  //     // case 'T':
+  //     //   if (
+  //     //     lastControlX !== undefined &&
+  //     //     lastControlY !== undefined &&
+  //     //     (lastCommand === 'Q' || lastCommand === 'T')
+  //     //   ) {
+  //     //     const [endX, endY] = points
+  //     //     const newControlX = 2 * endX - lastControlX
+  //     //     const newControlY = 2 * endY - lastControlY
+  //     //     g.quadraticCurveTo(newControlX, newControlY, endX, endY)
+  //     //     lastControlX = newControlX
+  //     //     lastControlY = newControlY
+  //     //   } else {
+  //     //     // Treat it as a line to the endpoint if there's no previous control point
+  //     //     g.lineTo(points[0], points[1])
 
-      //   }
-      //   lastCommand = 'T'
-      //   break
-      case 'Z':
-        g.closePath()
-        // lastCommand = 'Z'
-        // g.endFill()
-        break
-      default:
-        console.warn(`Unhandled path command: ${type}`)
-        break
-    }
-  })
-  g.endFill()
+  //     //   }
+  //     //   lastCommand = 'T'
+  //     //   break
+  //     case 'Z':
+  //       g.closePath()
+  //       // lastCommand = 'Z'
+  //       // g.endFill()
+  //       break
+  //     default:
+  //       console.warn(`Unhandled path command: ${type}`)
+  //       break
+  //   }
+  // })
+  // g.endFill()
   
 })
 
