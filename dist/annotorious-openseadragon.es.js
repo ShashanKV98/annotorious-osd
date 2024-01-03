@@ -26566,11 +26566,11 @@ const ta = (r) => {
   return { fillStyle: t, strokeStyle: e };
 }, Vi = (r) => (t, e, i) => {
   const { fillStyle: s, strokeStyle: n } = ta(i), o = new Oi();
-  o.beginFill(16776960, 1), r(e, o), o.endFill(), o.tint = s.tint, o.alpha = s.alpha, t.addChild(o);
+  o.beginFill(16777215, 1), r(e, o), o.endFill(), o.tint = s.tint, o.alpha = s.alpha, t.addChild(o);
   const a = new Oi();
   return a.lineStyle({
     width: 4 * n.lineWidth / Jo,
-    color: 255,
+    color: 16777215,
     alpha: 1,
     alignment: 1,
     native: !0,
