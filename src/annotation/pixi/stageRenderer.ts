@@ -207,7 +207,8 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
       case 'L': // MoveTo
         g.beginFill(0x0000ff, 1)
         g.lineTo(points[0], points[1])
-        // g.closePath()
+        g.closePath()
+        g.endFill()
         
         g.moveTo(points[0], points[1])
         
