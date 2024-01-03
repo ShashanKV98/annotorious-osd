@@ -199,6 +199,7 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
         break
       case 'L': // MoveTo
         g.lineTo(points[0], points[1])
+        g.moveTo(points[0], points[1])
         // lastCommand = 'M'
         break
 
@@ -241,7 +242,7 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
       //   lastCommand = 'T'
       //   break
       case 'Z':
-        g.closePath()
+        // g.closePath()
         // lastCommand = 'Z'
         break
       default:
