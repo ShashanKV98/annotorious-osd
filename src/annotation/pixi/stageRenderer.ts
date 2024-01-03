@@ -290,6 +290,12 @@ const drawRectangle = drawShape((rectangle: Rectangle, g: PIXI.Graphics) => {
 
 const drawLine= drawShape((line: Line, g: PIXI.Graphics) => {
   const { x1, y1, x2, y2 } = line.geometry
+  g.lineStyle({
+    width: 3,
+    color: 0x000000,
+    alpha: 1,
+    alignment: 1,
+  })
   g.moveTo(x1, y1)
   g.lineTo(x2, y2)
   g.closePath()
