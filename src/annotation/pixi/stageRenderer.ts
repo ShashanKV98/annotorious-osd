@@ -108,11 +108,11 @@ const drawShape =
     const { fillStyle, strokeStyle } = getGraphicsStyle(style)
 
     const fillGraphics = new PIXI.Graphics()
-    fillGraphics.beginFill(0xffffff)
-    fn(shape, fillGraphics)
-    fillGraphics.endFill()
-    fillGraphics.tint = fillStyle.tint
-    fillGraphics.alpha = fillStyle.alpha
+    // fillGraphics.beginFill(0xffffff)
+    // fn(shape, fillGraphics)
+    // fillGraphics.endFill()
+    // fillGraphics.tint = fillStyle.tint
+    // fillGraphics.alpha = fillStyle.alpha
     
     container.addChild(fillGraphics)
 
@@ -125,7 +125,7 @@ const drawShape =
     //   0.5,
     //   false
     // )
-    strokeGraphics.beginFill(0xffffff)
+    // strokeGraphics.beginFill(0xffffff)
     strokeGraphics.lineStyle({
       width: 4 * strokeStyle.lineWidth / lastScale,
       color: 0xffffff,
@@ -137,7 +137,7 @@ const drawShape =
     })
     
     fn(shape, strokeGraphics)
-    strokeGraphics.endFill()
+    // strokeGraphics.endFill()
     strokeGraphics.tint = strokeStyle.tint
     strokeGraphics.alpha = strokeStyle.alpha
     container.addChild(strokeGraphics)
@@ -188,8 +188,9 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
   console.log(g.currentPath)
   console.log(g)
   console.log(commands)
-  g.lineStyle(2, 0xff0000, 1)
   g.beginFill(0x00ff00, 1)
+  g.lineStyle(2, 0xff0000, 1)
+  
   // if (g.currentPath && g.currentPath.shape) {
   //   g.currentPath.shape.closed = false // Ensure the path is open
   // }

@@ -26402,9 +26402,9 @@ const Zo = (r) => {
   return { fillStyle: t, strokeStyle: e };
 }, sn = (r) => (t, e, i) => {
   const { fillStyle: s, strokeStyle: n } = Zo(i), o = new Mi();
-  o.beginFill(16777215), r(e, o), o.endFill(), o.tint = s.tint, o.alpha = s.alpha, t.addChild(o);
+  t.addChild(o);
   const a = new Mi();
-  return a.beginFill(16777215), a.lineStyle({
+  return a.lineStyle({
     width: 4 * n.lineWidth / Ko,
     color: 16777215,
     alpha: 1,
@@ -26412,7 +26412,7 @@ const Zo = (r) => {
     native: !0,
     join: $t.MITER,
     miterLimit: 500
-  }), r(e, a), a.endFill(), a.tint = n.tint, a.alpha = n.alpha, t.addChild(a), {
+  }), r(e, a), a.tint = n.tint, a.alpha = n.alpha, t.addChild(a), {
     fill: o,
     stroke: a,
     strokeWidth: n.lineWidth
@@ -26423,7 +26423,7 @@ const Zo = (r) => {
     $v,
     !1
   );
-  console.log(t.currentPath), console.log(t), console.log(e), t.lineStyle(2, 16711680, 1), t.beginFill(65280, 1), e.forEach((i) => {
+  console.log(t.currentPath), console.log(t), console.log(e), t.beginFill(65280, 1), t.lineStyle(2, 16711680, 1), e.forEach((i) => {
     const [s, ...n] = i;
     switch (s) {
       case "M":
