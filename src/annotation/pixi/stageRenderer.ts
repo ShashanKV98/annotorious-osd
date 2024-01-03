@@ -168,23 +168,35 @@ const drawShape =
   }
 const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
   const stroke = getStroke(freehand.geometry.points,options)
-  g.lineStyle(2, 0xff0000, 1) // Set the line style (optional, for the outline)
-  g.beginFill(0x0000ff, 1) 
-  g.moveTo(stroke[0][0], stroke[0][1])
+  function drawSegment(start, end, width) {
+    const halfWidth = width / 2
+    const angle = Math.atan2(end[1] - start[1], end[0] - start[0])
 
-  // Draw the stroke outline
-  stroke.forEach((point, index) => {
-    if (index > 0) {
-      // Skip the first point since we've already moved there
-      g.lineTo(point[0], point[1])
-    }
-  })
+    // Calculate the corners of the rectangle
+    const offset1 = [Math.sin(angle) * halfWidth, -Math.cos(angle) * halfWidth]
+    const offset2 = [-Math.sin(angle) * halfWidth, Math.cos(angle) * halfWidth]
 
-  // Optionally close the path if it's not already a closed loop
-  g.lineTo(stroke[0][0], stroke[0][1])
+    // Start a new shape for this segment
+    g.beginFill(0x0000ff, 1) // Start filling with the desired color
 
-  // Apply the fill to the entire stroke shape
-  g.endFill()
+    // Move to the first corner
+    g.moveTo(start[0] + offset1[0], start[1] + offset1[1])
+
+    // Draw the four sides of the rectangle
+    g.lineTo(end[0] + offset1[0], end[1] + offset1[1])
+    g.lineTo(end[0] + offset2[0], end[1] + offset2[1])
+    g.lineTo(start[0] + offset2[0], start[1] + offset2[1])
+
+    // Close and fill the shape
+    g.lineTo(start[0] + offset1[0], start[1] + offset1[1])
+    g.endFill()
+  }
+
+  // Assuming 'points' is an array of points representing the centerline of the stroke
+  // and 'width' is the desired width of the stroke
+  for (let i = 0; i < stroke.length - 1; i++) {
+    drawSegment(stroke[i], stroke[i + 1], 10)
+  }
   // const commands = getSvgPathArraysfromPoints(
   //   freehand.geometry.points,
   //   options,
