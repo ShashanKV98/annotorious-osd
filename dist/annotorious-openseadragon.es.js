@@ -26430,7 +26430,7 @@ const Zo = (r) => {
         t.moveTo(n[0], n[1]);
         break;
       case "L":
-        t.lineTo(n[0], n[1]), t.moveTo(n[0], n[1]);
+        t.beginFill(255, 1), t.lineTo(n[0], n[1]), t.closePath(), t.endFill(), t.moveTo(n[0], n[1]);
         break;
       case "C":
         t.bezierCurveTo(
