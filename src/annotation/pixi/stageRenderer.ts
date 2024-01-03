@@ -125,6 +125,7 @@ const drawShape =
     //   0.5,
     //   false
     // )
+    strokeGraphics.beginFill(0xffffff)
     strokeGraphics.lineStyle({
       width: 4 * strokeStyle.lineWidth / lastScale,
       color: 0xffffff,
@@ -136,6 +137,7 @@ const drawShape =
     })
     
     fn(shape, strokeGraphics)
+    strokeGraphics.endFill()
     strokeGraphics.tint = strokeStyle.tint
     strokeGraphics.alpha = strokeStyle.alpha
     container.addChild(strokeGraphics)
@@ -186,7 +188,7 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
   console.log(g.currentPath)
   console.log(g)
   console.log(commands)
-
+  g.lineStyle(2, 0xff0000, 1)
   // if (g.currentPath && g.currentPath.shape) {
   //   g.currentPath.shape.closed = false // Ensure the path is open
   // }
@@ -198,9 +200,7 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
         // lastCommand = 'M'
         break
       case 'L': // MoveTo
-         g.beginFill(0xff0000)
         g.lineTo(points[0], points[1])
-        g.endFill()
         g.moveTo(points[0], points[1])
         // lastCommand = 'M'
         break
@@ -244,7 +244,7 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
       //   lastCommand = 'T'
       //   break
       case 'Z':
-        // g.closePath()
+        g.closePath()
         // lastCommand = 'Z'
         break
       default:
