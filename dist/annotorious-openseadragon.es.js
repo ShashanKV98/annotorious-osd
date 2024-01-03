@@ -26630,7 +26630,7 @@ const ta = (r) => {
   t.drawRoundedRect(e, i, s, n, 4);
 }), l1 = Vi((r, t) => {
   const { x1: e, y1: i, x2: s, y2: n } = r.geometry;
-  t.moveTo(e, i), t.lineTo(s, n);
+  t.moveTo(e, i), t.lineTo(s, n), t.closePath();
 }), c1 = (r, t, e, i) => () => {
   const s = r.viewport.viewportToImageRectangle(
     r.viewport.getBounds(!0)

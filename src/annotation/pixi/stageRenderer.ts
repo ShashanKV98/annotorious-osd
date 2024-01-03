@@ -292,6 +292,7 @@ const drawLine= drawShape((line: Line, g: PIXI.Graphics) => {
   const { x1, y1, x2, y2 } = line.geometry
   g.moveTo(x1, y1)
   g.lineTo(x2, y2)
+  g.closePath()
 })
 const redrawStage =
   (
