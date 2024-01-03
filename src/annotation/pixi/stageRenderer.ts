@@ -199,7 +199,7 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
     const [type, ...points] = cmd
     switch (type) {
       case 'M': // MoveTo
-      g.beginFill(0x0000ff, 1)
+      // g.beginFill(0x0000ff, 1)
         g.moveTo(points[0], points[1])
         // lastCommand = 'M'
         break
@@ -256,7 +256,7 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
       case 'Z':
         g.closePath()
         // lastCommand = 'Z'
-        g.endFill()
+        // g.endFill()
         break
       default:
         console.warn(`Unhandled path command: ${type}`)

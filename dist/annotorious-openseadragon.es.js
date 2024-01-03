@@ -26427,7 +26427,7 @@ const Zo = (r) => {
     const [s, ...n] = i;
     switch (s) {
       case "M":
-        t.beginFill(255, 1), t.moveTo(n[0], n[1]);
+        t.moveTo(n[0], n[1]);
         break;
       case "L":
         t.beginFill(255, 1), t.lineTo(n[0], n[1]), t.moveTo(n[0], n[1]), t.endFill();
@@ -26446,7 +26446,7 @@ const Zo = (r) => {
         t.quadraticCurveTo(n[0], n[1], n[2], n[3]), t.moveTo(n[0], n[1]);
         break;
       case "Z":
-        t.closePath(), t.endFill();
+        t.closePath();
         break;
       default:
         console.warn(`Unhandled path command: ${s}`);
