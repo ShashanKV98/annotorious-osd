@@ -26423,7 +26423,7 @@ const Zo = (r) => {
     $v,
     !1
   );
-  console.log(t.currentPath), console.log(t), console.log(e), t.beginFill(65280, 1), t.lineStyle(2, 16711680, 1), e.forEach((i) => {
+  console.log(t.currentPath), console.log(t), console.log(e), t.beginFill(65280, 1), t.lineStyle(7, 255, 1), e.forEach((i) => {
     const [s, ...n] = i;
     switch (s) {
       case "M":

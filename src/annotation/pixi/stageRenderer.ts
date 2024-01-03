@@ -189,7 +189,7 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
   console.log(g)
   console.log(commands)
   g.beginFill(0x00ff00, 1)
-  g.lineStyle(2, 0xff0000, 1)
+  g.lineStyle(7, 0x0000ff, 1)
   
   // if (g.currentPath && g.currentPath.shape) {
   //   g.currentPath.shape.closed = false // Ensure the path is open
