@@ -128,9 +128,9 @@ const drawShape =
     // )
     // strokeGraphics.beginFill(0xffffff)
     strokeGraphics.lineStyle({
-      width: 2 * strokeStyle.lineWidth / lastScale,
+      width: 8 * strokeStyle.lineWidth / lastScale,
       color: 0xffff00,
-      alpha: 1,
+      alpha: 0.5,
       alignment: 1,
       native:true,
       join: PIXI.LINE_JOIN.MITER,
@@ -206,12 +206,12 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
         // lastCommand = 'M'
         break
       case 'L': // MoveTo
-        g.beginFill(0x0000ff, 1)
+        // g.beginFill(0x0000ff, 1)
         g.lineTo(points[0], points[1])
-        g.closePath()
-        g.endFill()
+        // g.closePath()
+        // g.endFill()
         
-        g.moveTo(points[0], points[1])
+        // g.moveTo(points[0], points[1])
         
         // lastCommand = 'M'
         break
@@ -231,7 +231,7 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
       case 'Q':
         // g.beginFill(0xff0000)
         g.quadraticCurveTo(points[0], points[1], points[2], points[3])
-        g.moveTo(points[0], points[1])
+        // g.moveTo(points[0], points[1])
         // g.endFill()
         // lastControlX = points[0]
         // lastControlY = points[1]
@@ -290,12 +290,6 @@ const drawRectangle = drawShape((rectangle: Rectangle, g: PIXI.Graphics) => {
 
 const drawLine= drawShape((line: Line, g: PIXI.Graphics) => {
   const { x1, y1, x2, y2 } = line.geometry
-  g.lineStyle({
-    width: 3,
-    color: 0x000000,
-    alpha: 1,
-    alignment: 1,
-  })
   g.moveTo(x1, y1)
   g.lineTo(x2, y2)
   g.closePath()

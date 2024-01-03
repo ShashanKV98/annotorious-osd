@@ -26569,9 +26569,9 @@ const ta = (r) => {
   o.beginFill(16777215, 0), r(e, o), o.endFill(), o.tint = s.tint, o.alpha = s.alpha, t.addChild(o);
   const a = new Oi();
   return a.lineStyle({
-    width: 2 * n.lineWidth / Jo,
+    width: 8 * n.lineWidth / Jo,
     color: 16776960,
-    alpha: 1,
+    alpha: 0.5,
     alignment: 1,
     native: !0,
     join: Qt.MITER,
@@ -26593,7 +26593,7 @@ const ta = (r) => {
         t.moveTo(n[0], n[1]);
         break;
       case "L":
-        t.beginFill(255, 1), t.lineTo(n[0], n[1]), t.closePath(), t.endFill(), t.moveTo(n[0], n[1]);
+        t.lineTo(n[0], n[1]);
         break;
       case "C":
         t.bezierCurveTo(
@@ -26606,7 +26606,7 @@ const ta = (r) => {
         );
         break;
       case "Q":
-        t.quadraticCurveTo(n[0], n[1], n[2], n[3]), t.moveTo(n[0], n[1]);
+        t.quadraticCurveTo(n[0], n[1], n[2], n[3]);
         break;
       case "Z":
         t.closePath();
@@ -26630,12 +26630,7 @@ const ta = (r) => {
   t.drawRoundedRect(e, i, s, n, 4);
 }), l1 = Vi((r, t) => {
   const { x1: e, y1: i, x2: s, y2: n } = r.geometry;
-  t.lineStyle({
-    width: 3,
-    color: 0,
-    alpha: 1,
-    alignment: 1
-  }), t.moveTo(e, i), t.lineTo(s, n), t.closePath();
+  t.moveTo(e, i), t.lineTo(s, n), t.closePath();
 }), c1 = (r, t, e, i) => () => {
   const s = r.viewport.viewportToImageRectangle(
     r.viewport.getBounds(!0)
