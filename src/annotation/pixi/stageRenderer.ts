@@ -109,7 +109,7 @@ const drawShape =
     const { fillStyle, strokeStyle } = getGraphicsStyle(style)
 
     const fillGraphics = new PIXI.Graphics()
-    fillGraphics.beginFill(0xffffff,0)
+    fillGraphics.beginFill(0xffffff)
     fn(shape, fillGraphics)
     fillGraphics.endFill()
     fillGraphics.tint = fillStyle.tint
@@ -174,7 +174,7 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
     options,
     false
   )
-  g.beginFill(0xffffff, 1)
+  // g.beginFill(0xffffff, 1)
   // const pathData = getSmoothPathData(
   //   freehand.geometry.points,
   //   options,
@@ -267,7 +267,7 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
         break
     }
   })
-  g.endFill()
+  // g.endFill()
   
 })
 

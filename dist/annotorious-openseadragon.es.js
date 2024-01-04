@@ -26555,7 +26555,7 @@ const ta = (r) => {
   return { fillStyle: t, strokeStyle: e };
 }, Vi = (r) => (t, e, i) => {
   const { fillStyle: s, strokeStyle: n } = ta(i), o = new Oi();
-  o.beginFill(16777215, 0), r(e, o), o.endFill(), o.tint = s.tint, o.alpha = s.alpha, t.addChild(o);
+  o.beginFill(16777215), r(e, o), o.endFill(), o.tint = s.tint, o.alpha = s.alpha, t.addChild(o);
   const a = new Oi();
   return a.lineStyle({
     width: 8 * n.lineWidth / Jo,
@@ -26571,12 +26571,11 @@ const ta = (r) => {
     strokeWidth: n.lineWidth
   };
 }, n1 = Vi((r, t) => {
-  const e = r1(
+  r1(
     r.geometry.points,
     t1,
     !1
-  );
-  t.beginFill(16777215, 1), e.forEach((i) => {
+  ).forEach((i) => {
     const [s, ...n] = i;
     switch (s) {
       case "M":
@@ -26605,7 +26604,7 @@ const ta = (r) => {
         console.warn(`Unhandled path command: ${s}`);
         break;
     }
-  }), t.endFill();
+  });
 }), o1 = Vi((r, t) => {
   const { cx: e, cy: i, rx: s, ry: n } = r.geometry;
   t.drawEllipse(e, i, s, n);
