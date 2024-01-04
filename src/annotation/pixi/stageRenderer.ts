@@ -174,6 +174,7 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
     options,
     false
   )
+  g.beginFill(0xffffff, 1)
   // const pathData = getSmoothPathData(
   //   freehand.geometry.points,
   //   options,
@@ -266,7 +267,7 @@ const drawFreehand = drawShape((freehand: Freehand, g: PIXI.Graphics) => {
         break
     }
   })
-  // g.endFill()
+  g.endFill()
   
 })
 

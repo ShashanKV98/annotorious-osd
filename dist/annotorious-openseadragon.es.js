@@ -26572,11 +26572,12 @@ const ta = (r) => {
     strokeWidth: n.lineWidth
   };
 }, n1 = Vi((r, t) => {
-  r1(
+  const e = r1(
     r.geometry.points,
     t1,
     !1
-  ).forEach((i) => {
+  );
+  t.beginFill(16777215, 1), e.forEach((i) => {
     const [s, ...n] = i;
     switch (s) {
       case "M":
@@ -26605,7 +26606,7 @@ const ta = (r) => {
         console.warn(`Unhandled path command: ${s}`);
         break;
     }
-  });
+  }), t.endFill();
 }), o1 = Vi((r, t) => {
   const { cx: e, cy: i, rx: s, ry: n } = r.geometry;
   t.drawEllipse(e, i, s, n);
